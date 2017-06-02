@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Usuario } from '../clases/clases.component';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -8,7 +8,13 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  usuario:Usuario= new Usuario();
+  constructor() 
+  { 
+    this.usuario.nombre="Usuario";
+    this.usuario.img="defecto.png"
+    
+  }
 
   ngOnInit() {
   }

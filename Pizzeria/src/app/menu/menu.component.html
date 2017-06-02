@@ -1,12 +1,20 @@
-<nav class="navbar-inverse" >
+<div class="container">
+    <h1>Pizzeria</h1>
+      <a class="pull-right" href="#">
+        <img class="media-object" src="assets/img/usuarios/{{usuario.img}}" width="120" height="120" >
+        <h1>{{usuario.nombre}}</h1>
+      </a>
+  </div>
+  <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
       <li><a routerLink="/productos" routerLinkActive="active">Productos</a></li>
       <li><a routerLink="/locales" routerLinkActive="active">Locales</a></li>
       <li><a routerLink="/ofertas" routerLinkActive="active">Ofertas</a></li>
       <li><a routerLink="/usuarios" routerLinkActive="active">Usuarios</a></li>
-      <li><a [routerLink]="[]" (click)="Salir()" routerLinkActive="active">Logout</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a routerLink="/login" routerLinkActive="active"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
     </ul>
   </div>
 </nav>

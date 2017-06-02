@@ -49,3 +49,45 @@ export class Usuario
     this.img = img;
   }
 }
+export class Producto
+{
+  public id : number;
+  public descripcion : string;
+  public precio: string;
+  public img :string;
+
+  /**
+  * Usuario del sistema.
+  */
+  constructor(id : number = 0,
+              descripcion : string = "",
+              precio : string = "",
+              img : string = "") 
+  {
+    this.id = id;
+    this.descripcion = descripcion;
+    this.precio = precio;
+    this.img = img;
+  }
+}
+export class Local
+{
+  public id : number;
+  public ubicacion : string;
+  public lat:number;
+  public lng:number;
+
+  /**
+  * Usuario del sistema.
+  */
+  constructor(id : number = 0,
+              ubicacion : string = "",
+              lat : number=0,
+              lng:number=0) 
+  {
+    this.id = id;
+    this.ubicacion = ubicacion;
+    this.lat = lat;
+    this.lng=lng;
+  }
+}

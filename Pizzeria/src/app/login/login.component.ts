@@ -6,7 +6,8 @@ import { Usuario } from '../clases/clases.component';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  usuario = new Usuario(1,'Osmar','Flores','39333971','Administrador','osmar@gmail.com','123','Masculino','defecto.png');
+  usuario = new Usuario(1,'Osmar','Flores','39333971','Administrador','osmar@gmail.com','123','Masculino','suiryu.png');
+  
   mostrar:boolean=false;
 
   constructor() 
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
   Login()
   {
-
+    console.log(this.usuario);
   }
   Registrar()
   {
