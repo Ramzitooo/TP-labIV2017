@@ -1,0 +1,12 @@
+<nav class="navbar-inverse" >
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+      <li><a routerLink="/productos" routerLinkActive="active">Productos</a></li>
+      <li><a routerLink="/locales" routerLinkActive="active">Locales</a></li>
+      <li><a routerLink="/ofertas" routerLinkActive="active">Ofertas</a></li>
+      <li><a routerLink="/usuarios" routerLinkActive="active">Usuarios</a></li>
+      <li><a [routerLink]="[]" (click)="Salir()" routerLinkActive="active">Logout</a></li>
+    </ul>
+  </div>
+</nav>
