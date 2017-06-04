@@ -1,48 +1,54 @@
-<div class="container">
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="myCarousel" data-slide-to="0" [class]="active1" (click)="cambiar(1)"></li>
-      <li data-target="myCarousel" data-slide-to="1" [class]="active2" (click)="cambiar(2)"></li>
-      <li data-target="myCarousel" data-slide-to="2" [class]="active3" (click)="cambiar(3)"></li>
-    </ol>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" >
+	<div *ngFor="let item of ofertas">
+<div class="col-xs-12 col-md-6 bootstrap snippets">
+	<!-- product -->
+	<div class="product-content product-wrap clearfix">
+		<div class="row">
+				<div class="col-md-5 col-sm-12 col-xs-12">
+					<div class="product-image"> 
+						<img src="assets/img/ofertas/{{item.img}}" alt="194x228" class="img-responsive"> 
+						<span class="tag2 hot">
+							SALE!
+						</span> 
+					</div>
+				</div>
+				<div class="col-md-7 col-sm-12 col-xs-12">
+				<div class="product-deatil">
+						<h5 class="name">
+							<a href="#">
+								{{item.descripcion}}<span>Category</span>
+							</a>
+						</h5>
+						<p class="price-container">
+							<span>${{item.precio}}</span>
+						</p>
+						<span class="tag1"></span> 
+				</div>
+				<div class="description">
+					<p>Proin in ullamcorper lorem. Maecenas eu ipsum </p>
+				</div>
+				<div class="product-info smart-form">
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-6"> 
+							<a href="javascript:void(0);" class="btn btn-success">Encargar</a>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<div class="rating">
+								<label for="stars-rating-5"><i class="fa fa-star"></i></label>
+								<label for="stars-rating-4"><i class="fa fa-star"></i></label>
+								<label for="stars-rating-3"><i class="fa fa-star text-primary"></i></label>
+								<label for="stars-rating-2"><i class="fa fa-star text-primary"></i></label>
+								<label for="stars-rating-1"><i class="fa fa-star text-primary"></i></label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end product -->
+</div>
+</div>
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-
-      <div [class]="item1">
-        <img src="assets/img/jamon/jamon1.jpg" alt="Los Angeles" style="width:100%;">
-        <div class="carousel-caption">
-          <h3>Los Angeles</h3>
-          <p>LA is always so much fun!</p>
-        </div>
-      </div>
-
-      <div [class]="item2">
-        <img src="assets/img/jamon/jamon2.jpg" alt="Chicago" style="width:100%;">
-        <div class="carousel-caption">
-          <h3>Chicago</h3>
-          <p>Thank you, Chicago!</p>
-        </div>
-      </div>
-
-      <div [class]="item3">
-        <img src="assets/img/jamon/jamon3.jpg" alt="New York" style="width:100%;">
-        <div class="carousel-caption">
-          <h3>New York</h3>
-          <p>We love the Big Apple!</p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Left and right controls -->
-    <a class="left carousel-control" (click)="anterior()">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-
-    </a>
-    <a class="right carousel-control" (click)="posterior()">
-      <span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
-  </div>
 </div>

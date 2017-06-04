@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Oferta } from '../clases/clases.component';
 
 @Component({
   selector: 'app-ofertas',
@@ -6,173 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ofertas.component.css']
 })
 export class OfertasComponent implements OnInit {
-  num = 1;
-  num2 = 1;
-  item1 = "item";
-  item2 = "item";
-  item3 = "item";
-
-  active1 = "";
-  active2 = "";
-  active3 = ""
+  ofertas :Array<Oferta> = new Array<Oferta>();
   constructor() 
   { 
-    this.slider();
+     this.ofertas.push(new Oferta(1,"Pizza con Jamon","100","o1.jpg"));
+    this.ofertas.push(new Oferta(2,"Pizza de Muzarela","70","o1.jpg"));
+    this.ofertas.push(new Oferta(3,"Empanada de Carne","20","o1.jpg"));
+    this.ofertas.push(new Oferta(1,"Pizza con Jamon","100","o1.jpg"));
+    this.ofertas.push(new Oferta(2,"Pizza de Muzarela","70","o1.jpg"));
+    this.ofertas.push(new Oferta(3,"Empanada de Carne","20","o1.jpg"));
+    console.log(this.ofertas);
   }
 
   ngOnInit() {
   }
-  cambiar(func)
-  {
-      switch(func)
-      {
-          case 1:
-            this.item1 = "item active";
-            this.active1 = "active";
-            this.item2 = "item";
-            this.active2 = "";
-            this.item3 = "item";
-            this.active3 = "";
-            this.num = 1;
-            this.num2 = 2;
-            break;
-          case 2:
-            this.item1 = "item";
-            this.active1 = "";
-            this.item2 = "item active";
-            this.active2 = "active";
-            this.item3 = "item";
-            this.active3 = "";
-            this.num = 2;
-            this.num2 = 3;
-            break;
-          case 3:
-            this.item1 = "item";
-            this.active1 = "";
-            this.item2 = "item";
-            this.active2 = "";
-            this.item3 = "item active";
-            this.active3 = "active";
-            this.num = 3;
-            this.num2 = 1;
-            break;
-      }
-  }
-
-  slider()
-  {
-      switch(this.num2)
-      {
-          case 1:
-            this.item2 = "item";
-            this.active2 = "";
-            this.item3 = "item";
-            this.active3 = "";
-            this.item1 = "item active";
-            this.active1 = "active";
-            this.num = 1;
-            this.num2 = 2;
-            break;
-          case 2:
-            this.item1 = "item";
-            this.active1 = "";
-            this.item3 = "item";
-            this.active3 = "";
-            this.item2 = "item active";
-            this.active2 = "active";
-            this.num = 2;
-            this.num2 = 3;
-            break;
-          case 3:
-            this.item1 = "item";
-            this.active1 = "";
-            this.item2 = "item";
-            this.active2 = "";
-            this.item3 = "item active";
-            this.active3 = "active";
-            this.num = 3;
-            this.num2 = 1;
-            break;
-      }
-        setTimeout(() =>
-        {
-             this.slider();
-        },
-        3000);
-  }
-
-
-  anterior()
-  {
-      switch(this.num)
-      {
-          case 1:
-            this.item1 = "item";
-            this.active1 = "";
-            this.item2 = "item";
-            this.active2 = "";
-            this.item3 = "item active";
-            this.active3 = "active";
-            this.num = 3;
-            this.num2 = 1;
-            break;
-          case 2:
-            this.item1 = "item active";
-            this.active1 = "active";
-            this.item2 = "item";
-            this.active2 = "";
-            this.item3 = "item";
-            this.active3 = "";
-            this.num = 1;
-            this.num2 = 2;
-            break;
-          case 3:
-            this.item1 = "item";
-            this.active1 = "";
-            this.item2 = "item active";
-            this.active2 = "active";
-            this.item3 = "item";
-            this.active3 = "";
-            this.num = 2;
-            this.num2 = 3;
-            break;
-      }
-  }
-
-  posterior()
-  {
-      switch(this.num)
-      {
-          case 1:
-            this.item1 = "item";
-            this.active1 = "";
-            this.item2 = "item active";
-            this.active2 = "active";
-            this.item3 = "item";
-            this.active3 = "";
-            this.num = 2;
-            this.num2 = 3;
-            break;
-          case 2:
-            this.item1 = "item";
-            this.active1 = "";
-            this.item2 = "item";
-            this.active2 = "";
-            this.item3 = "item active";
-            this.active3 = "active";
-            this.num = 3;
-            this.num2 = 1;
-            break;
-          case 3:
-            this.item1 = "item active";
-            this.active1 = "active";
-            this.item2 = "item";
-            this.active2 = "";
-            this.item3 = "item";
-            this.active3 = "";
-            this.num = 1;
-            this.num2 = 2;
-            break;
-      }
-  }
+  
 }

@@ -49,6 +49,23 @@ export class Usuario
     this.img = img;
   }
 }
+export class Oferta
+{
+  public id : number;
+  public descripcion : string;
+  public precio: string;
+  public img :string;
+  constructor(id : number = 0,
+              descripcion : string = "",
+              precio : string = "",
+              img : string = "") 
+  {
+    this.id = id;
+    this.descripcion = descripcion;
+    this.precio = precio;
+    this.img = img;
+  }
+}
 export class Producto
 {
   public id : number;

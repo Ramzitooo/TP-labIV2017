@@ -1,0 +1,70 @@
+<div class="conteiner">
+  <form role="form" class="form-horizontal col-md-6 col-md-offset-3">
+          <h1 class="page-header">Formulario de registro</h1>
+            <div class="form-group">
+               <label for="nombre" class="col-md-2 control-label">Nombre:</label>
+               <div class="col-md-10">
+                  <input id="nombre" type="text" class="form-control" (keyup)="Keyup(1)" [ngStyle]="alertStylesNombre" (focusout)="Verificar(1)"/>
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="apelldo" class="col-md-2 control-label">Apellido:</label>
+               <div class="col-md-10">
+                  <input id="apellido" type="text" class="form-control" (keyup)="Keyup(2)" [ngStyle]="alertStylesApellido" (focusout)="Verificar(2)"/>
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="dni" class="col-md-2 control-label">DNI:</label>
+               <div class="col-md-10">
+                  <input id="dni" type="number" class="form-control" onkeypress="return event.charCode >= 48" (keyup)="Keyup(3)" [ngStyle]="alertStylesDni" (focusout)="Verificar(3)"/>
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="sexo" class="col-md-2 control-label">Sexo:</label>
+               <div class="radio col-md-9 col-md-offset-2">
+                  <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked (change)="Sexo('Hombre')">
+                    Hombre
+                  </label>
+               </div>
+               <div class="radio col-md-9 col-md-offset-2">
+                  <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (change)="Sexo('Mujer')">
+                    Mujer
+                  </label>
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="email" class="col-md-2 control-label">E-Mail:</label>
+               <div class="col-md-10">
+                  <input id="email" type="text" class="form-control" (keyup)="Keyup(4)" [ngStyle]="alertStylesEmail" (focusout)="Verificar(4)"/>
+               </div>
+            </div>
+              <div class="alert alert-danger" *ngIf="emailRepetido">
+                <strong>Error!</strong> Email ya existente!
+              </div>
+
+            <div class="form-group">
+               <label for="password" class="col-md-2 control-label">Password:</label>
+               <div class="col-md-10">
+                  <input id="password" type="password" class="form-control" (keyup)="Keyup(5)" [ngStyle]="alertStylesPass" (focusout)="Verificar(5)"/>
+               </div>
+            </div>
+            <div class="form-group">
+               <div class="col-md-10">
+                  <input type="file" ng2FileSelect [uploader]="uploader" id="file" (change)="Imagen()" />
+                  <button type="button" class="btn btn-success btn-xs" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length" ><span class="glyphicon glyphicon-upload"></span> Upload</button>
+                  <img [src]="foto"  width="200px" height="200px">
+               </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4"><button type="button" class="btn btn-success btn-block " (click)="Register()" [disabled]="condicion1 || condicion2 || condicion3 || condicion4 || condicion5">Registrarme</button></div>
+              <div class="col-sm-4"><button type="reset" class="btn btn-danger btn-block" routerLink="/inicio">Cancelar</button></div>
+            </div>
+         </form>
+
+</div>
