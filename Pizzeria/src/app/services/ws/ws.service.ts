@@ -30,7 +30,50 @@ export class WsService {
     .then( this.extractData )
     .catch( this.handleError );
   }
-
+  MoverFoto(foto)
+  {
+    return this.http.get("http://localhost/api/index.php/mover/"+foto)
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+    EliminarFoto(foto)
+  {
+    return this.http.get("http://localhost/api/index.php/eliminarfoto/"+foto)
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  //-------------------------USUARIOS----------------------------------
+  TraerUsuarios()
+  {
+    return this.http.get("http://localhost/api/index.php/usuarios")
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  AgregarUsuario(obj)
+  {
+    return this.http.get("http://localhost/api/index.php/agregar/"+JSON.stringify(obj))
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  ModificarUsuario(obj)
+  {
+    return this.http.get("http://localhost/api/index.php/modificar/"+JSON.stringify(obj))
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  EliminarUsuario(id)
+  {
+    return this.http.get("http://localhost/api/index.php/eliminar/"+id)
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  //---------------------------------------------------------------------
   private extractData(res: Response) {
     let body = res.json();    
     

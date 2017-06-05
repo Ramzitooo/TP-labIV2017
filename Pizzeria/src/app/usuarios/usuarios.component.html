@@ -1,3 +1,4 @@
+<div class="container">
 <div class="container bootstrap snippet">
     <div class="row">
         <div class="col-lg-12">
@@ -19,7 +20,7 @@
                               
                                 <tr>
                                     <td>
-                                        <img src="assets/img/usuarios/suiryu.png" width="100" height="100">
+                                        <img src="http://localhost/api/img/usuarios/{{item.img}}" width="100" height="100">
                                         <span >{{item.nombre}}</span>
                                         <span class="user-subhead">{{item.apellido}}</span>
                                     </td>
@@ -38,8 +39,8 @@
                                      {{item.sexo}}
                                    </td>
                                    <td class="text-center">
-                                     <button type="button" class="btn btn-success">Modificar</button><br><br>
-                                     <button type="button" class="btn btn-danger">Eliminar</button>
+                                     <button type="button" class="btn btn-success" (click)="Modificar(item)" >Modificar</button><br><br>
+                                     <button type="button" class="btn btn-danger" (click)="Eliminar(item.id,item.img)">Eliminar</button>
                                    </td>
                                 </tr>
                                
@@ -49,6 +50,118 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-primary btn-block">Agregar</button>
+        <button type="button" class="btn btn-primary btn-block" (click)="VerFormulario()" >Agregar</button><br>
+        
     </div>
+    
+</div>
+
+<!--->FIN LISTADO!<-->
+<!--->COMIENZO FORMULARIO!<-->
+<div *ngIf="formulario">  
+    <form role="form" class="form-horizontal col-md-6 col-md-offset-3">
+          <h1 class="page-header">Formulario de registro</h1>
+            <div class="form-group">
+               <label for="nombre" class="col-md-2 control-label">Nombre:</label>
+               <div class="col-md-10">
+                  <input  [(ngModel)]="usuario2.nombre" name="nombre" id="nombre" type="text" maxlength="15" class="form-control" (keyup)="Keyup(1)" [ngStyle]="alertStylesNombre" (focusout)="Verificar(1)"/>
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="apelldo" class="col-md-2 control-label">Apellido:</label>
+               <div class="col-md-10">
+                  <input [(ngModel)]="usuario2.apellido" name="apellido" id="apellido" type="text" maxlength="15" class="form-control" (keyup)="Keyup(2)" [ngStyle]="alertStylesApellido" (focusout)="Verificar(2)"/>
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="dni" class="col-md-2 control-label">DNI:</label>
+               <div class="col-md-10">
+                  <!--input id="dni" type="number"  class="form-control"  onkeypress="return event.charCode >= 48" (keyup)="Keyup(3)" [ngStyle]="alertStylesDni" (focusout)="Verificar(3)"/-->
+                  <input [(ngModel)]="usuario2.dni" name="dni" id="dni" type="text" class="form-control" maxlength="8" oninput="this.value=this.value.replace(/[^0-9]/g,'');" (keyup)="Keyup(3)" [ngStyle]="alertStylesDni" (focusout)="Verificar(3)">
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="sexo" class="col-md-2 control-label">Sexo:</label>
+               <div class="radio col-md-9 col-md-offset-2">
+                  <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked (change)="Sexo('Masculino')">
+                    Masculino
+                  </label>
+               </div>
+               <div class="radio col-md-9 col-md-offset-2">
+                  <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" (change)="Sexo('Femenino')">
+                    Femenino
+                  </label>
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="email" class="col-md-2 control-label">E-Mail:</label>
+               <div class="col-md-10">
+                  <input [(ngModel)]="usuario2.email" name="email" id="email" type="text" maxlength="25" class="form-control" (keyup)="Keyup(4)" [ngStyle]="alertStylesEmail" (focusout)="Verificar(4)"/>
+               </div>
+            </div>
+              <div class="alert alert-danger" *ngIf="emailRepetido">
+                <strong>Error!</strong> Email ya existente!
+              </div>
+
+            <div class="form-group">
+               <label for="password" class="col-md-2 control-label">Password:</label>
+               <div class="col-md-10">
+                  <input [(ngModel)]="usuario2.password" name="password" id="password" type="password" maxlength="15" class="form-control" (keyup)="Keyup(5)" [ngStyle]="alertStylesPass" (focusout)="Verificar(5)"/>
+               </div>
+            </div>
+
+            <!-->CATEGORIA<-->
+            <div class="form-group">
+               <label for="sexo" class="col-md-2 control-label">Categoria:</label>
+               <div class="radio col-md-9 col-md-offset-2">
+                  <label>
+                    <input type="radio" name="optionsRadios2" id="optionsRadios1" value="option1" checked (change)="Tipo('Cliente')">
+                    Cliente
+                  </label>
+               </div>
+               <div class="radio col-md-9 col-md-offset-2">
+                  <label>
+                    <input type="radio" name="optionsRadios2" id="optionsRadios2" value="option2" (change)="Tipo('Empleado')">
+                    Empleado
+                  </label>
+               </div>
+               <div class="radio col-md-9 col-md-offset-2">
+                  <label>
+                    <input type="radio" name="optionsRadios2" id="optionsRadios2" value="option2" (change)="Tipo('Encargado')">
+                    Encargado
+                  </label>
+               </div>
+               <div class="radio col-md-9 col-md-offset-2">
+                  <label>
+                    <input type="radio"  name="optionsRadios2" id="optionsRadios2" value="option2" (change)="Tipo('Administrador')">
+                    Administrador
+                  </label>
+               </div>
+            </div><br>
+            <!-->FIN CATEGORIA<-->
+
+            <div class="form-group">
+               <div class="col-md-10">
+                  <input type="file" ng2FileSelect [uploader]="uploader" id="file" (change)="Imagen()" />
+                  <div class="alert alert-danger" *ngIf="errorFoto"><strong>Error!</strong> {{Mensaje}}</div><br>
+                  <img [src]="foto"  width="200px" height="200px">               
+               </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4"><button type="button" class="btn btn-success btn-block " (click)="Confirmar()"  [disabled]="condicion1 || condicion2 || condicion3 || condicion4 || condicion5">Confirmar</button></div>
+              <div class="col-sm-4"><button type="reset" class="btn btn-danger btn-block" (click)="Cancelar()">Cancelar</button><br></div>
+              <div class="col-sm-4"><button type="reset" class="btn btn-danger btn-block" (click)="Editar()">Editar</button><br></div>
+            </div>
+         </form>
+         
+</div>
+
+
+
 </div>

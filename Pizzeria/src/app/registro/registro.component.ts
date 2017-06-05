@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../clases/clases.component';
+import { WsService }  from '../services/ws/ws.service';
 import { FileUploader } from "ng2-file-upload";
+import { Router } from '@angular/router';
 
 const URL = "http://localhost/api/index.php/api";
 
@@ -11,9 +13,9 @@ const URL = "http://localhost/api/index.php/api";
 })
 export class RegistroComponent implements OnInit {
 usuario = new Usuario();
-    foto= "assets/img/usuarios/defecto.png";
-    imagen="";
-     public uploader:FileUploader = new FileUploader({url: URL});
+  foto= "assets/img/usuarios/defecto.png";
+  imagen="defecto.png";
+  public uploader:FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver:boolean = false;
   public hasAnotherDropZoneOver:boolean = false;
   alertStylesNombre = {'border-color': ''};
@@ -28,26 +30,27 @@ usuario = new Usuario();
   condicion5 = true;
   emailRepetido = false;
   numero = 4;
+  errorFoto = false;
+  Mensaje = "";
 
-
-  constructor() {
-        this.usuario.sexo = "Hombre";
-        this.uploader.onBeforeUploadItem=(item)=>
-      {
-
-        console.info("item",item);
-
-        // para evitar el error del cors
-        //https://github.com/valor-software/ng2-file-upload/issues/140
-        item.withCredentials=false;
-      }
-      this.uploader.onSuccessItem=(response,status)=>
-      {
-        this.foto = "http://localhost/api/tmp/"+status;
-        this.imagen=status;
-        console.info("respuesta",response);
-        console.info("estatus",status);
-      }
+  constructor(private ws: WsService,private parentRouter : Router) 
+  {
+      this.usuario.sexo = "Masculino";
+      this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;}
+      this.uploader.onSuccessItem=(response,status)=>{this.errorFoto = false;
+        let json = JSON.parse(status);
+        if(json.Exito)
+        {
+              this.imagen = json.foto;
+              this.foto = "http://localhost/api/tmp/"+this.imagen;
+        }
+        else
+        {
+              this.errorFoto = true;
+              this.Mensaje = json.Mensaje;
+              this.imagen = "defecto.png";
+              this.foto = "../assets/img/usuarios/defecto.png";
+        }}
   }
   Imagen()
   {
@@ -55,24 +58,20 @@ usuario = new Usuario();
     if((<HTMLInputElement>document.getElementById('file')).value == "")
     {
       this.foto = "assets/img/usuarios/defecto.png";
-      this.imagen="defecto.png"
+      this.imagen="defecto.png";
     }
   }
   ngOnInit() {
-  }
-  public fileOverBase(e:any):void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e:any):void {
-    this.hasAnotherDropZoneOver = e;
   }
 
   Sexo(sex)
   {
     this.usuario.sexo = sex;
   }
-
+  Cancelar()
+  {
+    this.foto="assets/img/usuarios/defecto.png";
+  }
   Verificar(num)
   {
     switch(num)
@@ -160,10 +159,15 @@ usuario = new Usuario();
             this.usuario.email = (<HTMLInputElement>document.getElementById('email')).value;
             this.usuario.password = (<HTMLInputElement>document.getElementById('password')).value;
             //this.usuario.img =
-            this.usuario.tipo = "cliente";
+            this.usuario.tipo = "Cliente";
             this.usuario.img = this.imagen; 
             console.log(this.usuario);
             //REGISTRAR EN BS
+            this.ws.AgregarUsuario(this.usuario).then(data => {console.log(data)});//SUBO UN CLIENTE!
+            this.ws.MoverFoto(this.usuario.img).then(data => {console.log(data)});//MUEVO LA FOTO!
+            alert("Has sido agregado correctamente!");
+            this.parentRouter.navigateByUrl('/inicio');
+            
         }
         else
         {
