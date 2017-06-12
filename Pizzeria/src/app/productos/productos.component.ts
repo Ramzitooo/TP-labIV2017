@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Producto } from '../clases/clases.component';
+import { WsService } from '../services/ws/ws.service';
+import { FileUploader } from "ng2-file-upload";
+
+const URL = "http://localhost/api/index.php/api";
 
 @Component({
   selector: 'app-productos',
@@ -7,106 +11,132 @@ import { Producto } from '../clases/clases.component';
   styleUrls: ['./productos.component.css']
 })
 export class ProductosComponent implements OnInit {
+  producto:Producto = new Producto();
   productos:Array<Producto> = new Array<Producto>();
-  num = 1;
-  item1 = "item";
-  item2 = "item";
-  item3 = "item";
+  public uploader:FileUploader = new FileUploader({url: URL});
+  public hasBaseDropZoneOver:boolean = false;
+  public hasAnotherDropZoneOver:boolean = false;
 
-  active1 = "";
-  active2 = "";
-  active3 = "";
-  constructor() 
+  alertStylesDescripcion = {'border-color': ''};
+  alertStylesPrecio = {'border-color': ''};
+  condicion1 = true;
+  condicion2 = true;
+
+  foto= "assets/img/productos/defecto.png";
+  imagen="defecto.png";
+  errorFoto = false;
+  Mensaje = "";
+  formulario:boolean=false;
+
+  constructor(public ws:WsService) 
   { 
-    this.productos.push(new Producto(1,"Pizza con Jamon","100","jamon1.jpg"));
-    this.productos.push(new Producto(2,"Pizza de Muzarela","70","jamon1.jpg"));
-    this.productos.push(new Producto(3,"Empanada de Carne","20","jamon1.jpg"));
-    this.productos.push(new Producto(1,"Pizza con Jamon","100","jamon1.jpg"));
-    this.productos.push(new Producto(2,"Pizza de Muzarela","70","jamon1.jpg"));
-    this.productos.push(new Producto(3,"Empanada de Carne","20","jamon1.jpg"));
-    this.productos.push(new Producto(1,"Pizza con Jamon","100","jamon1.jpg"));
-    this.productos.push(new Producto(2,"Pizza de Muzarela","70","jamon1.jpg"));
-    this.productos.push(new Producto(3,"Empanada de Carne","20","jamon1.jpg"));
-    console.log(this.productos);
-    this.slider();
+    this.ws.TraerProductos().then(data => {this.productos=data;console.log(data);});
+     this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;}
+      this.uploader.onSuccessItem=(response,status)=>{this.errorFoto = false;
+        let json = JSON.parse(status);
+        if(json.Exito)
+        {
+              this.imagen = json.foto;
+              this.foto = "http://localhost/api/tmp/"+this.imagen;
+        }
+        else
+        {
+              this.errorFoto = true;
+              this.Mensaje = json.Mensaje;
+              this.imagen = "defecto.png";
+              this.foto = "../assets/img/productos/defecto.png";
+        }}
+    //console.log(this.productos);
   }
 
-  ngOnInit() {
+  ngOnInit() 
+  {
+
+  }
+  Verificar(num)
+  {
+    switch(num)
+    {
+      case 1:
+        if((<HTMLInputElement>document.getElementById('descripcion')).value == "")
+        {
+            this.alertStylesDescripcion = {'border-color': 'red'};
+            this.condicion1 = true;
+        }
+        else
+        {
+            this.alertStylesDescripcion = {'border-color': 'green'};
+            this.condicion1 = false;
+        }
+        break;
+      case 2:
+        if((<HTMLInputElement>document.getElementById('precio')).value == "")
+        {
+            this.alertStylesPrecio = {'border-color': 'red'};
+            this.condicion2 = true;
+        }
+        else
+        {
+            this.alertStylesPrecio = {'border-color': 'green'};
+            this.condicion2 = false;
+        }
+        break;
+    }
+  }
+
+
+  Keyup(num)
+  {
+      this.Verificar(num);
+  }
+  VerFormulario()
+  {
+    this.formulario=true;
   }
   Pedir(producto)
   {
     console.log(producto);
   }
-  cambiar(func)
+  Imagen()
+  {
+    this.uploader.uploadAll();
+    if((<HTMLInputElement>document.getElementById('file')).value == "")
     {
-        switch(func)
-        {
-            case 1:
-              this.item1 = "item active";
-              this.active1 = "active";
-              this.item2 = "item";
-              this.active2 = "";
-              this.item3 = "item";
-              this.active3 = "";
-              this.num = 1;
-              break;
-            case 2:
-              this.item1 = "item";
-              this.active1 = "";
-              this.item2 = "item active";
-              this.active2 = "active";
-              this.item3 = "item";
-              this.active3 = "";
-              this.num = 2;
-              break;
-            case 3:
-              this.item1 = "item";
-              this.active1 = "";
-              this.item2 = "item";
-              this.active2 = "";
-              this.item3 = "item active";
-              this.active3 = "active";
-              this.num = 3;
-              break;
-        }
+      this.foto = "assets/img/usuarios/defecto.png";
+      this.imagen="defecto.png";
+    }
+  }
+  BorrarProducto(producto)
+  { 
+    console.log(producto);
+    var respuesta=confirm("Esta seguro de eliminar este producto?");
+    if (respuesta==true) 
+    {
+      this.ws.EliminarProducto(producto.id);//ELIMINO EL USUARIO DE LA BASE DE DATOS.  
+      this.ws.EliminarFotoProducto(producto.img);//ELIMINO LA FOTO DEL USUARIO DE MI SERVIDOR.
+      this.ws.TraerProductos().then(data => {this.productos=data;});//RECARGO LA PAGINA.
+      alert("Usuario Eliminado Correctamente!");  
+    } 
+    else 
+    {
+      console.log("No se elimino al usuario");
     }
 
-  slider()
-  {
-      switch(this.num)
-      {
-          case 1:
-            this.item2 = "item";
-            this.active2 = "";
-            this.item3 = "item";
-            this.active3 = "";
-            this.item1 = "item active";
-            this.active1 = "active";
-            this.num = 2;
-            break;
-          case 2:
-            this.item1 = "item";
-            this.active1 = "";
-            this.item3 = "item";
-            this.active3 = "";
-            this.item2 = "item active";
-            this.active2 = "active";
-            this.num = 3;
-            break;
-          case 3:
-            this.item1 = "item";
-            this.active1 = "";
-            this.item2 = "item";
-            this.active2 = "";
-            this.item3 = "item active";
-            this.active3 = "active";
-            this.num = 1;
-            break;
-      }
-        setTimeout(() =>
-        {
-             this.slider();
-        },
-        1000);
   }
+  AgregarProducto()
+  {
+    this.producto.img=this.imagen;
+    console.log(this.producto);
+    this.ws.AgregarProducto(this.producto);//SUBO UN CLIENTE!
+    this.ws.MoverFotoProducto(this.producto.img);//MUEVO LA FOTO!
+    alert("Producto agregado correctamente!");
+    this.formulario=false;
+    this.ActualizarLista();
+    
+  }
+  ActualizarLista()
+  {
+    return this.ws.TraerProductos().then(data => {this.productos=data;});
+  }
+  
 }

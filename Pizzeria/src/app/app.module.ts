@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FileUploadModule } from "ng2-file-upload";//AGREGADO ARCHIVOS
+import { ChartsModule } from 'ng2-charts';//AGREGO CHARTS
 //COMPONENTES
 import { AppComponent } from './app.component';
 import { ProductosComponent } from './productos/productos.component';
@@ -57,6 +58,7 @@ const appRoutes: Routes = [
     FileUploadModule,// AGREGO ARCHIVOS
     JwtModule,//AGREGO JWT.
     HttpModule,
+    ChartsModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [WsService,AutService,VerificarJWTService],//AGREGO SERVICIOS.

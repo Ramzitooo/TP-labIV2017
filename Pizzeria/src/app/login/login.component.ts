@@ -1,152 +1,101 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../clases/clases.component';
+import { WsService }  from '../services/ws/ws.service';
+import { AutService } from '../services/auth/aut.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit 
+{
+
   usuario = new Usuario();
-  mostrar : boolean = false;
-  alertStylesNombre = {'border-color': ''};
-  alertStylesApellido = {'border-color': ''};
-  alertStylesDni = {'border-color': ''};
+
   alertStylesEmail = {'border-color': ''};
   alertStylesPass = {'border-color': ''};
   condicion1 = true;
   condicion2 = true;
-  condicion3 = true;
-  condicion4 = true;
-  condicion5 = true;
   emailRepetido = false;
-  numero = 4;
 
 
-  constructor() {
-        this.usuario.sexo = "Hombre";
-  }
-
-  ngOnInit() {
-  }
-
-
-  Sexo(sex)
+  constructor(private ws: WsService,private parentRouter : Router,private aut:AutService) 
   {
-    this.usuario.sexo = sex;
+        
   }
-  Verificar(num)
+
+  ngOnInit() 
+  {
+
+  }
+
+
+  Verificar(num)//VERIFICO QUE LOS CAMPOS DE LOS TEXT NO ESTEN VACIO EN CASO CONTRARIO LOS REMARCO Y DESACTIVO EL BOTON LOGIN.
   {
     switch(num)
     {
       case 1:
-        if((<HTMLInputElement>document.getElementById('nombre')).value == "")
+        if((<HTMLInputElement>document.getElementById('email')).value == "")
         {
-            this.alertStylesNombre = {'border-color': 'red'};
+            this.alertStylesEmail= {'border-color': 'red'};
             this.condicion1 = true;
         }
         else
         {
-            this.alertStylesNombre = {'border-color': 'green'};
+            this.alertStylesEmail = {'border-color': 'green'};
             this.condicion1 = false;
         }
         break;
       case 2:
-        if((<HTMLInputElement>document.getElementById('apellido')).value == "")
+        if((<HTMLInputElement>document.getElementById('password')).value == "")
         {
-            this.alertStylesApellido = {'border-color': 'red'};
+            this.alertStylesPass = {'border-color': 'red'};
             this.condicion2 = true;
         }
         else
         {
-            this.alertStylesApellido = {'border-color': 'green'};
-            this.condicion2 = false;
-        }
-        break;
-      case 3:
-        if((<HTMLInputElement>document.getElementById('dni')).value == "")
-        {
-            this.alertStylesDni = {'border-color': 'red'};
-            this.condicion3 = true;
-        }
-        else
-        {
-            this.alertStylesDni = {'border-color': 'green'};
-            this.condicion3 = false;
-        }
-        break;
-      case 4:
-        this.emailRepetido = false;
-        if((<HTMLInputElement>document.getElementById('email')).value == "")
-        {
-            this.alertStylesEmail = {'border-color': 'red'};
-            this.condicion4 = true;
-        }
-        else
-        {
-            this.alertStylesEmail = {'border-color': 'green'};
-            this.condicion4 = false;
-        }
-        break;
-      case 5:
-        if((<HTMLInputElement>document.getElementById('password')).value == "")
-        {
-            this.alertStylesPass = {'border-color': 'red'};
-            this.condicion5 = true;
-        }
-        else
-        {
             this.alertStylesPass = {'border-color': 'green'};
-            this.condicion5 = false;
+            this.condicion2 = false;
         }
         break;
     }
   }
-  Aceptar()
-  {
-    //localStorage.setItem("Usuario","Osmar Flores!");
-    //localStorage.removeItem("token");
-    console.log("Implementar!");
-  }
-  Ver()
-  {
-    console.log(localStorage.getItem("Usuario"));
-    console.log(this.usuario);
-  }
-  Login()
-  {
-    console.log(this.usuario);
-  }
-  Registrar()
-  {
-    this.mostrar=true;
-  }
-  Keyup(num)
+  Keyup(num)//PARA VALIDACION DEL TECLEADO DE LETRAS DE LOS INPUT.
   {
       this.Verificar(num);
   }
 
-
-  Register()
+  Login()
   {
-        if(3 == this.numero)//SI NO EXISTE EMAIL
+    console.log(this.usuario);
+    this.ws.CrearToken(this.usuario)//LLAMO AL METODO DE MI SERVICIO CREARTOKEN
+    .then(data => 
+    {
+        console.log(data);//EN EL DATA DEVUELVE TRUE SI EL MAIL Y EL PASS COINCIDEN EN LA BASE DE DATOS
+        if (data.exito==true) 
         {
-            this.usuario.nombre = (<HTMLInputElement>document.getElementById('nombre')).value;
-            this.usuario.apellido = (<HTMLInputElement>document.getElementById('apellido')).value;
-            this.usuario.dni = (<HTMLInputElement>document.getElementById('dni')).value;
-            //SEXO YA ESTA
-            this.usuario.email = (<HTMLInputElement>document.getElementById('email')).value;
-            this.usuario.password = (<HTMLInputElement>document.getElementById('password')).value;
-            //this.usuario.img =
-            this.usuario.tipo = "cliente";
-            console.log(this.usuario);
-            //REGISTRAR EN BS
+            localStorage.setItem('token', data.token);
+            //console.log(this.aut.getToken());
+            window.location.reload();
+            this.parentRouter.navigateByUrl("/inicio");
         }
         else
         {
-            this.alertStylesEmail = {'border-color': 'red'};
-            this.condicion4 = true;
-            this.emailRepetido = true;
+            alert("Datos Incorrectos... Reingrese!");
+            this.usuario=new Usuario();
         }
+                
+    })
+    .catch(error => 
+    {
+      console.log(error);
+    });
+  }
+
+  Registro()
+  {
+    this.parentRouter.navigateByUrl('/registro');
   }
   
 }

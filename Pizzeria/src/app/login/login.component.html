@@ -1,21 +1,24 @@
-<div class="container">
-  <br><br>
-         <form role="form">
-            <div class="form-group">
-              <label for="ejemplo_email_1">E-mail</label>
-              <input type="email" [ngStyle]="alertStylesEmail" (focusout)="Verificar(1)" (keyup)="Keyup(1)" class="form-control" id="email"
-                     placeholder="Introduce tu email...">
-            </div>
-            <div class="form-group">
-              <label for="ejemplo_password_1">Contraseña</label>
-              <input type="password" [ngStyle]="alertStylesPass" (focusout)="Verificar(2)" (keyup)="Keyup(2)" class="form-control" id="password" 
-                     placeholder="Contraseña...">
-            </div>
-          
-            <button type="button" class="btn btn-success btn-block" [disabled]="condicion1 || condicion2" (click)="Login()">Login</button><br>
-            <div><a routerLink="/registro" routerLinkActive="active"><button type="button" class="btn btn-primary btn-block" >Registrarse</button></a></div>
-            
-         
-         </form>
-         
+<div class="container"><br><br>
+
+  <div class="card card-container">
+
+    <img id="profile-img" class="profile-img-card" src="assets/img/usuarios/defecto.png" />
+
+    <p id="profile-name" class="profile-name-card"></p>
+
+    <form class="form-signin"><br>
+
+      <input [(ngModel)]="usuario.email" name="email" type="email" [ngStyle]="alertStylesEmail" (focusout)="Verificar(1)" (keyup)="Keyup(1)" class="form-control" id="email" placeholder="Introduce tu email...">
+      
+      <input [(ngModel)]="usuario.password" name="password" type="password" [ngStyle]="alertStylesPass" (focusout)="Verificar(2)" (keyup)="Keyup(2)" class="form-control" id="password" placeholder="Contraseña..."><br>
+      
+      <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" (click)="Login()" [disabled]="condicion1 || condicion2" ><span class="glyphicon glyphicon-user"></span> Login</button>
+      
+      <button class="btn btn-lg btn-success btn-block btn-signin2" type="button" (click)="Registro()" ><span class="glyphicon glyphicon-edit"></span> Registrarme!</button>
+    
+    </form><!-- /form -->
+  
+  </div><br><br><br><br><br><br><br><br><br><br>
+
 </div>
+        

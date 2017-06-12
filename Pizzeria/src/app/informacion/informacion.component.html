@@ -1,3 +1,52 @@
-<p>
-  informacion works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <h1> GRAFICO 1 RADAR</h1>
+<div style="display: block">
+  <canvas baseChart
+          [datasets]="radarChartData"
+          [labels]="radarChartLabels"
+          [chartType]="radarChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+</div>
+    </div>
+    <div class="col-sm-6">
+      <h1> GRAFICO 2 PIE</h1>
+      <div style="display: block">
+  <canvas baseChart
+          [data]="pieChartData"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+<h1> GRAFICO 3 AREA POLAR</h1>
+<div style="display: block">
+  <canvas baseChart
+          [data]="polarAreaChartData"
+          [labels]="polarAreaChartLabels"
+          [legend]="polarAreaLegend"
+          [chartType]="polarAreaChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+</div>
+    </div>
+    <div class="col-sm-6">
+<h1> GRAFICO 4 ROSQUILLA</h1>
+<div style="display: block">
+  <canvas baseChart
+              [data]="doughnutChartData"
+              [labels]="doughnutChartLabels"
+              [chartType]="doughnutChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+</div>
+    </div>
+  </div>
+</div>
+

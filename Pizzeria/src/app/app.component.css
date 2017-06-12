@@ -1,0 +1,31 @@
+
+
+footer {
+    background-color: black;
+    color: white;
+    padding: 15px;
+}
+
+.info {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    color: white;
+}
+
+.imgGithub {
+    width: 100%;
+}
+
+.filaCentrada {
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (min-width: 767px) {
+    .row-eq-height {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+    }
+
+}

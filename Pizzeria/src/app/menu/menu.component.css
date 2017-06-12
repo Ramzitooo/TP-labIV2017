@@ -43,13 +43,22 @@ EXAMPLES 2-7 BELOW
 **************************/
 
 /* EXAMPLE 2 (larger logo) - simply adjust top bottom padding to make logo larger */
-
+a
+{
+    font-weight: bold;
+    font-family: "Calibri";
+    font-size: 17px;
+	font-style: normal;
+	font-variant: normal;
+	line-height: 18.5714px;
+}
 .example2 .navbar-brand>img {
   padding: 7px 15px;
 }
 
 /* CSS Transform Align Navbar Brand Text ... This could also be achieved with table / table-cells */
 .navbar-alignit .navbar-header {
+    
 	  -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;

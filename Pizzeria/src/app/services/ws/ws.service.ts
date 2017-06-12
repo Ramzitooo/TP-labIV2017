@@ -10,26 +10,12 @@ import { AuthHttp } from 'angular2-jwt';
 @Injectable()
 export class WsService {
 
-  url: string = 'http://localhost/slimpizzeria/ws/administracion.php/';
 
   constructor(public http: Http, private authHttp: AuthHttp)
   {
 
   }
 
-  /**
-  * Metodo HTTP nativo
-  * @param user 
-  */
-  post(user: Object)
-  {
-    var body =  user;
-
-    return this.http.post(this.url + 'login', body)
-    .toPromise()
-    .then( this.extractData )
-    .catch( this.handleError );
-  }
   MoverFoto(foto)
   {
     return this.http.get("http://localhost/api/index.php/mover/"+foto)
@@ -37,9 +23,23 @@ export class WsService {
     .then( this.extractData )
     .catch( this.handleError );
   }
+  MoverFotoProducto(foto)
+  {
+    return this.http.get("http://localhost/api/index.php/mover/producto/"+foto)
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
     EliminarFoto(foto)
   {
     return this.http.get("http://localhost/api/index.php/eliminarfoto/"+foto)
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+     EliminarFotoProducto(foto)
+  {
+    return this.http.get("http://localhost/api/index.php/eliminarfotoproducto/"+foto)
     .toPromise()
     .then( this.extractData )
     .catch( this.handleError );
@@ -74,6 +74,50 @@ export class WsService {
     .catch( this.handleError );
   }
   //---------------------------------------------------------------------
+  //--------------------------JWT-----------------------------------------
+    CrearToken(user: Object)//AGREGADO!
+    {
+    var body = user;
+    return this.http.post('http://localhost/jwt2/index.php/login', body)//POR METODO POST!
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  GetJwt()//AGREGADO...!
+  {
+    return this.authHttp.get('http://localhost/jwt2/index.php/token')
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  //----------------------------------------------------------------------
+
+  
+  //------------------------PRODUCTOS------------------------------------
+  TraerProductos()
+  {
+    return this.http.get("http://localhost/api/index.php/productos")
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  AgregarProducto(obj)
+  {
+    return this.http.get("http://localhost/api/index.php/agregar/producto/"+JSON.stringify(obj))
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  EliminarProducto(id)
+  {
+    return this.http.get("http://localhost/api/index.php/eliminar/producto/"+id)
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  //--------------------------------------------------------------------
+
+
   private extractData(res: Response) {
     let body = res.json();    
     
