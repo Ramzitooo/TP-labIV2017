@@ -10,3 +10,12 @@ input[type=number]::-webkit-inner-spin-button {
     margin: 0;
 
 }
+.text-center
+{
+   font-weight: bold;
+    font-family: "Calibri";
+    font-size: 17px;
+	font-style: normal;
+	font-variant: normal;
+	line-height: 18.5714px;
+}
