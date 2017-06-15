@@ -3,7 +3,8 @@ import { Producto } from '../clases/clases.component';
 import { WsService } from '../services/ws/ws.service';
 import { FileUploader } from "ng2-file-upload";
 
-const URL = "http://localhost/api/index.php/api";
+//const URL = "http://localhost/api/index.php/api";
+const URL = "http://www.osmar.hol.es/index.php/api";
 
 @Component({
   selector: 'app-productos',
@@ -27,6 +28,7 @@ export class ProductosComponent implements OnInit {
   errorFoto = false;
   Mensaje = "";
   formulario:boolean=false;
+  
 
   constructor(public ws:WsService) 
   { 
@@ -37,7 +39,8 @@ export class ProductosComponent implements OnInit {
         if(json.Exito)
         {
               this.imagen = json.foto;
-              this.foto = "http://localhost/api/tmp/"+this.imagen;
+              //this.foto = "http://localhost/api/tmp/"+this.imagen;
+              this.foto = "http://www.osmar.hol.es/tmp/"+this.imagen;
         }
         else
         {

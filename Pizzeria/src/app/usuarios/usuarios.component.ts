@@ -4,8 +4,9 @@ import { WsService } from '../services/ws/ws.service';//AGREGO SERVICIO.
 import { FileUploader } from "ng2-file-upload";
 import { Router } from '@angular/router';
 
-const URL = "http://localhost/api/index.php/api";
-
+//const URL = "http://localhost/api/index.php/api";
+const URL = "http://www.osmar.hol.es/index.php/api";
+ 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
@@ -39,6 +40,7 @@ export class UsuariosComponent implements OnInit {
   usuario2:Usuario= new Usuario();
   formulario:boolean=false;
   fotomodificar="";
+  btnModificar:boolean = false;
   constructor(private ws:WsService,private parentRouter : Router) 
   { 
     this.ws.TraerUsuarios()
@@ -52,7 +54,8 @@ export class UsuariosComponent implements OnInit {
         if(json.Exito)
         {
               this.imagen = json.foto;
-              this.foto = "http://localhost/api/tmp/"+this.imagen;
+              //this.foto = "http://localhost/api/tmp/"+this.imagen;
+              this.foto = "http://www.osmar.hol.es/tmp/"+this.imagen;
         }
         else
         {
@@ -93,16 +96,20 @@ export class UsuariosComponent implements OnInit {
               this.ws.MoverFoto(this.usuario.img);
             }
             console.log(this.usuario);
-            this.ws.TraerUsuarios().then(data => {this.usuarios=data;});
+            //this.ws.TraerUsuarios().then(data => {this.usuarios=data;});
             this.formulario=false;
+            this.btnModificar=false;
+            window.location.reload(); 
   }
   Modificar(item)
   {
     console.log(item);
     this.usuario2=item;
-    this.foto="http://localhost/api/img/usuarios/"+item.img;
+    //this.foto="http://localhost/api/img/usuarios/"+item.img;
+    this.foto="http://www.osmar.hol.es/img/usuarios/"+item.img;
     this.fotomodificar=item.img;
     this.formulario=true;
+    this.btnModificar=true;
   }
   Eliminar(id,foto)
   {
@@ -111,8 +118,11 @@ export class UsuariosComponent implements OnInit {
     {
       this.ws.EliminarUsuario(id);//ELIMINO EL USUARIO DE LA BASE DE DATOS.  
       this.ws.EliminarFoto(foto);//ELIMINO LA FOTO DEL USUARIO DE MI SERVIDOR.
-      this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
-      alert("Usuario Eliminado Correctamente!");  
+      
+      //this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
+      
+      alert("Usuario Eliminado Correctamente!"); 
+      window.location.reload(); 
     } 
     else 
     {
@@ -239,9 +249,10 @@ export class UsuariosComponent implements OnInit {
             console.log(this.usuario);
             this.ws.AgregarUsuario(this.usuario);//SUBO UN CLIENTE!
             this.ws.MoverFoto(this.usuario.img);//MUEVO LA FOTO!
-            this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
+            //this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
             alert("Usuario agregado correctamente!");
             this.formulario=false;
+            window.location.reload(); 
             //REGISTRAR EN BS
             
         }

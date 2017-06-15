@@ -4,7 +4,8 @@ import { WsService }  from '../services/ws/ws.service';
 import { FileUploader } from "ng2-file-upload";
 import { Router } from '@angular/router';
 
-const URL = "http://localhost/api/index.php/api";
+//const URL = "http://localhost/api/index.php/api";
+const URL = "http://www.osmar.hol.es/index.php/api";
 
 @Component({
   selector: 'app-registro',
@@ -42,7 +43,8 @@ usuario = new Usuario();
         if(json.Exito)
         {
               this.imagen = json.foto;
-              this.foto = "http://localhost/api/tmp/"+this.imagen;
+              //this.foto = "http://localhost/api/tmp/"+this.imagen;
+              this.foto = "http://www.osmar.hol.es/tmp/"+this.imagen;
         }
         else
         {

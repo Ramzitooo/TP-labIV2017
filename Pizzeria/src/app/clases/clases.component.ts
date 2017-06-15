@@ -90,21 +90,30 @@ export class Producto
 export class Local
 {
   public id : number;
-  public ubicacion : string;
+  public direccion : string;
+  public estado: string;
+  public telefono: string;
   public lat:number;
   public lng:number;
+  public img:string;
 
   /**
   * Usuario del sistema.
   */
   constructor(id : number = 0,
-              ubicacion : string = "",
-              lat : number=0,
-              lng:number=0) 
+              direccion : string = "",
+              estado: string = "",
+              telefono: string = "",
+              lat : number = 0,
+              lng:number = 0,
+              img: string = "") 
   {
     this.id = id;
-    this.ubicacion = ubicacion;
+    this.direccion = direccion;
+    this.estado = estado;
+    this.telefono = telefono;
     this.lat = lat;
-    this.lng=lng;
+    this.lng = lng;
+    this.img = img;
   }
 }

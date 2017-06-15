@@ -1,3 +1,6 @@
 <div class="container">
+  <input [(ngModel)]="direccion" name="direccion" type="text" class="form-control" id="usr"><br>
+ <div style="width: 200px;margin: 0 auto;"><button type="button" class="btn btn-primary" (click)="LeerDireccion()">Buscar</button></div><br>
+ <div style="width: 200px;margin: 0 auto;"><button type="button" class="btn btn-success" (click)="Chequear()">Chequear</button></div><br>
   <div #map id="map"></div>
 </div>
