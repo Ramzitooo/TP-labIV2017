@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit
 
   ngOnInit() 
   {
-
+    
   }
 
 
@@ -69,6 +69,7 @@ export class LoginComponent implements OnInit
   Login()
   {
     console.log(this.usuario);
+    this.aut.logOut();
     this.ws.CrearToken(this.usuario)//LLAMO AL METODO DE MI SERVICIO CREARTOKEN
     .then(data => 
     {
@@ -76,8 +77,8 @@ export class LoginComponent implements OnInit
         if (data.exito==true) 
         {
             localStorage.setItem('token', data.token);
-            //console.log(this.aut.getToken());
-            window.location.reload();
+            this.ws.GetJwt().then(data => {console.log(data.rta.usuario);localStorage.setItem("usuario",JSON.stringify(data.rta.usuario));});
+            console.log(this.aut.getToken());
             this.parentRouter.navigateByUrl("/inicio");
         }
         else

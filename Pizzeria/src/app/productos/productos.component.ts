@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Producto } from '../clases/clases.component';
+import { Usuario } from '../clases/clases.component';
 import { WsService } from '../services/ws/ws.service';
 import { FileUploader } from "ng2-file-upload";
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 //const URL = "http://localhost/api/index.php/api";
 const URL = "http://www.osmar.hol.es/index.php/api";
@@ -29,13 +31,16 @@ export class ProductosComponent implements OnInit {
   Mensaje = "";
   formulario:boolean=false;
   
-
-  constructor(public ws:WsService) 
+  hoy:Date = new Date(); 
+  usuario : Usuario = new Usuario();
+  pedidos : FirebaseListObservable<any[]>;
+  constructor(public ws:WsService,private firebase: AngularFireDatabase) 
   { 
+    this.pedidos=firebase.list("/Pedidos");
     this.ws.TraerProductos().then(data => {this.productos=data;console.log(data);});
-     this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;}
-      this.uploader.onSuccessItem=(response,status)=>{this.errorFoto = false;
-        let json = JSON.parse(status);
+    this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;}
+    this.uploader.onSuccessItem=(response,status)=>{this.errorFoto = false;
+    let json = JSON.parse(status);
         if(json.Exito)
         {
               this.imagen = json.foto;
@@ -92,6 +97,7 @@ export class ProductosComponent implements OnInit {
   {
       this.Verificar(num);
   }
+  
   VerFormulario()
   {
     this.formulario=true;
@@ -99,6 +105,30 @@ export class ProductosComponent implements OnInit {
   Pedir(producto)
   {
     console.log(producto);
+    this.usuario= JSON.parse(localStorage.getItem("usuario"));
+    console.log(this.usuario);
+    console.log(this.ObtenerFecha(this.hoy));
+    var obj = {fecha:this.ObtenerFecha(this.hoy),local:"Burzaco",usuario:this.usuario.nombre,producto:producto.descripcion,estado:"Inpago",precio:producto.precio,idUsuario:this.usuario.id};
+    console.log(obj);
+    this.pedidos.push(obj);
+    console.log("Se cargo un pedido a firebase!");
+    //console.log(this.pedidos);
+    //this.pedidos.subscribe(data => {console.log(data);});
+    this.pedidos.forEach( pedidos => 
+    {
+                  for(let pedido of pedidos)
+                  {
+                    if(pedido.idUsuario==this.usuario.id)
+                    {
+                        console.log(pedido);
+                       
+                    }
+                  }
+                });
+  }
+  ObtenerFecha(date : Date)
+  {
+    return date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
   }
   Imagen()
   {
@@ -117,6 +147,7 @@ export class ProductosComponent implements OnInit {
     {
       this.ws.EliminarProducto(producto.id);//ELIMINO EL USUARIO DE LA BASE DE DATOS.  
       this.ws.EliminarFotoProducto(producto.img);//ELIMINO LA FOTO DEL USUARIO DE MI SERVIDOR.
+      this.productos=null;
       this.ws.TraerProductos().then(data => {this.productos=data;});//RECARGO LA PAGINA.
       alert("Usuario Eliminado Correctamente!");  
     } 
@@ -134,6 +165,7 @@ export class ProductosComponent implements OnInit {
     this.ws.MoverFotoProducto(this.producto.img);//MUEVO LA FOTO!
     alert("Producto agregado correctamente!");
     this.formulario=false;
+    this.productos=null;
     this.ActualizarLista();
     
   }

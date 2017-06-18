@@ -10,41 +10,47 @@ import { AutService } from '../services/auth/aut.service';
 })
 export class MenuComponent implements OnInit {
 
-  usuario:Usuario= new Usuario();
+  usuario:Usuario= new Usuario(1,"nada","","","","","","","defecto.png");
   token:any;
   constructor(private router:Router,private aut:AutService,private ws : WsService) 
   { 
-
+    //this.ws.GetJwt().then(data => {this.usuario=data.rta.usuario;});
   }
 
   ngOnInit() 
   {
-
-    try 
+    
+   
+    /*try 
     {
-        this.token=this.aut.getToken();
-        this.usuario=this.token.usuario;
+        this.token=this.ws.GetJwt().then(data => {console.log(data.rta.usuario.img);})
+        //this.usuario=this.token.usuario;
     } 
     catch (error) 
     {
       console.log("No hay token!")
-    }
+    }*/
 
   }
   Salir()
   {
  
     localStorage.setItem('token', null);
+    localStorage.setItem('usuario', null);
     this.aut.logOut();
     window.alert('Chauuu!!!');
     this.router.navigate(['/login']);
   
   }
+  ObtenerUsuario()
+  {
+    this.usuario= JSON.parse(localStorage.getItem("usuario"));
+    //this.ws.GetJwt().then(data => {console.log(data.rta.usuario);});
+    return this.usuario;
+  }
     Comprobar()
   {
-      /*this.token=this.aut.getToken();
-      this.usuario=this.token.usuario;
-      return this.aut.isLogued();*/
+
       if (this.aut.isLogued()==true) 
       {
         return true;

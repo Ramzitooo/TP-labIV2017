@@ -36,10 +36,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a [routerLink]="[]" (click)="Salir()" routerLinkActive="active">Log Out</a></li>
-              <!--li><a routerLink="/registro" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Registrarse</a></li>
-              <li><a routerLink="/login" routerLinkActive="active"><span class="glyphicon glyphicon-log-in"></span> Login</a></li-->
-              <li><a style="color:white">{{usuario.nombre}}</a></li>
-              <li><div class="navbar-header"><a class="navbar-brand"><img src="http://localhost/api/img/usuarios/{{usuario.img}}" class="img-rounded"></a></div></li>
+              <li><a style="color:white">{{ObtenerUsuario().nombre}}</a></li>
+              <!--li><a style="color:white">{{usuario.nombre}}</a></li-->
+              <li><div class="navbar-header"><a class="navbar-brand"><img [src]="'http://www.osmar.hol.es/img/usuarios/'+ObtenerUsuario().img" class="img-rounded"></a></div></li>
+              <!--li><div class="navbar-header"><a class="navbar-brand"><img src="http://www.osmar.hol.es/img/usuarios/{{usuario.img}}" class="img-rounded"></a></div></li-->
           </ul>
         </div>
 </nav>

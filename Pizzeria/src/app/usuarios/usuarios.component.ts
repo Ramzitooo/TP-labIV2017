@@ -96,10 +96,11 @@ export class UsuariosComponent implements OnInit {
               this.ws.MoverFoto(this.usuario.img);
             }
             console.log(this.usuario);
-            //this.ws.TraerUsuarios().then(data => {this.usuarios=data;});
+            this.usuarios=null;
+            this.ws.TraerUsuarios().then(data => {this.usuarios=data;});
             this.formulario=false;
             this.btnModificar=false;
-            window.location.reload(); 
+            //window.location.reload(); 
   }
   Modificar(item)
   {
@@ -118,11 +119,11 @@ export class UsuariosComponent implements OnInit {
     {
       this.ws.EliminarUsuario(id);//ELIMINO EL USUARIO DE LA BASE DE DATOS.  
       this.ws.EliminarFoto(foto);//ELIMINO LA FOTO DEL USUARIO DE MI SERVIDOR.
-      
-      //this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
+      this.usuarios=null;
+      this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
       
       alert("Usuario Eliminado Correctamente!"); 
-      window.location.reload(); 
+      //window.location.reload(); 
     } 
     else 
     {
@@ -249,10 +250,11 @@ export class UsuariosComponent implements OnInit {
             console.log(this.usuario);
             this.ws.AgregarUsuario(this.usuario);//SUBO UN CLIENTE!
             this.ws.MoverFoto(this.usuario.img);//MUEVO LA FOTO!
-            //this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
+            this.usuarios=null;
+            this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
             alert("Usuario agregado correctamente!");
             this.formulario=false;
-            window.location.reload(); 
+            //window.location.reload(); 
             //REGISTRAR EN BS
             
         }
