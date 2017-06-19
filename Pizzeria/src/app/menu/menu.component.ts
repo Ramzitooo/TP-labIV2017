@@ -10,7 +10,7 @@ import { AutService } from '../services/auth/aut.service';
 })
 export class MenuComponent implements OnInit {
 
-  usuario:Usuario= new Usuario(1,"nada","","","","","","","defecto.png");
+  usuario:Usuario= new Usuario(1,"nada","asdasd","asdasd","","","","","defecto.png");
   token:any;
   constructor(private router:Router,private aut:AutService,private ws : WsService) 
   { 
@@ -34,9 +34,9 @@ export class MenuComponent implements OnInit {
   }
   Salir()
   {
- 
+    var usu:Usuario = new Usuario(0,"Sin Usuario","asdasd","asdasd","","","","","defecto.png");//HACER CUANDO COMIENZE UNA PAGINA! OCTAVIO PRUEVA!
     localStorage.setItem('token', null);
-    localStorage.setItem('usuario', null);
+    localStorage.setItem('usuario', JSON.stringify(usu));
     this.aut.logOut();
     window.alert('Chauuu!!!');
     this.router.navigate(['/login']);
@@ -44,9 +44,18 @@ export class MenuComponent implements OnInit {
   }
   ObtenerUsuario()
   {
-    this.usuario= JSON.parse(localStorage.getItem("usuario"));
-    //this.ws.GetJwt().then(data => {console.log(data.rta.usuario);});
-    return this.usuario;
+    //this.usuario= JSON.parse(localStorage.getItem("usuario"));
+      //this.ws.GetJwt().then(data => {console.log(data.rta.usuario);});
+    //return this.usuario;
+    try 
+    {
+        this.usuario= JSON.parse(localStorage.getItem("usuario"));
+        return this.usuario;
+    } 
+    catch (error) 
+    {
+      console.log("Cargando!");
+    }
   }
     Comprobar()
   {

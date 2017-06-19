@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit
 
   constructor(private ws: WsService,private parentRouter : Router,private aut:AutService) 
   {
-        
+        var usu:Usuario = new Usuario(0,"Sin Usuario","asdasd","asdasd","","","","","defecto.png");
+        localStorage.setItem('usuario', JSON.stringify(usu));
   }
 
   ngOnInit() 

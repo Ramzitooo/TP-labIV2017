@@ -1,6 +1,61 @@
 <div class="container">
-  <input [(ngModel)]="direccion" name="direccion" type="text" class="form-control" id="usr"><br>
+  <input [(ngModel)]="direccion" name="direccion" type="text" class="form-control" id="usr" placeholder="Ingrese dirrecon a buscar y despues oprima Buscar para marcarlo en el mapa!"><br>
  <div style="width: 200px;margin: 0 auto;"><button type="button" class="btn btn-primary" (click)="LeerDireccion()">Buscar</button></div><br>
  <div style="width: 200px;margin: 0 auto;"><button type="button" class="btn btn-success" (click)="Chequear()">Chequear</button></div><br>
-  <div #map id="map"></div>
+  <div #map id="map"></div><br><br>
+
+    <table class="table" style="background:beige">
+  <thead>
+    <tr>
+      <th>Foto</th>
+      <th>Direccion</th>
+      <th>Telefono</th>
+      <th>Estado</th>
+      <th>Accion</th>
+    </tr>
+  </thead>
+  <tbody  *ngFor="let item of locales">
+    <tr >
+      <td align="center"><img src="assets/img/locales/defecto.jpg" width="100" height="100"></td>
+      <td>{{item.direccion}}</td>
+      <td>{{item.telefono}}</td>
+      <div *ngIf="item.estado=='Disponible'"><td class="label label-success" >{{item.estado}}</td></div>
+	  <div *ngIf="item.estado=='Reservado'"><td class="label label-danger">{{item.estado}}</td></div>
+    <td *ngIf="usuario.tipo !='' "><button type="button"  (click)="VerPuntoMapa(item)" class="btn btn-info btn-sm"> Ver Ubicacion!</button>
+    <div *ngIf="item.estado=='Disponible'"><br><button type="button"  (click)="Reservar(item)" class="btn btn-primary btn-sm"> Pedir reserva!</button></div></td>
+    </tr>
+
+  </tbody>
+</table>
+
+	<div class="row" *ngIf="usuario.tipo !='' ">
+		<div class="col-md-6"><button type="button" class="btn btn-primary " (click)="VerFormulario()" >Agregar Local Nuevo!</button></div>
+		<div class="col-md-6"><button type="button" class="btn btn-success " (click)="VerReservas()" >Ver Reservaciones!</button></div>
+	</div><BR><BR>
+<div class="row" *ngIf="listadoReservas">
+
+        <div class="col-md-12" style="background:white">
+        	<div class="table-responsive">
+              <table id="mytable" class="table table-bordred table-hover " >
+                <thead >
+                    <th>Fecha</th>
+                	  <th>Local</th>
+                    <th>Usuario</th>
+                </thead>
+    <tbody *ngFor="let item of lasReservas" ><!--RECORRO EL ARRAY DE JSON DE PEIDOS DE FIREBASE!-->
+
+    <tr ><!--VALIDO QUE SOLO MUESTRE LOS PEDIDOS DEL USUARIO LOGEADO!-->
+
+    <td>{{item.fecha}}</td>
+    <td>{{item.local}}</td>
+    <td>{{item.usuario}}</td>
+
+    </tr>
+
+    </tbody>
+        
+</table>
+        </div>
+		</div>
+		</div>
 </div>

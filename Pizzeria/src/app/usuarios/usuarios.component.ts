@@ -41,8 +41,12 @@ export class UsuariosComponent implements OnInit {
   formulario:boolean=false;
   fotomodificar="";
   btnModificar:boolean = false;
+
+  usuarioLogeado:Usuario = new Usuario();
+
   constructor(private ws:WsService,private parentRouter : Router) 
   { 
+    this.usuarioLogeado = JSON.parse(localStorage.getItem("usuario"));
     this.ws.TraerUsuarios()
     .then(data => {console.log(data);this.usuarios=data})
     .catch(e => {console.log(e);});
@@ -123,7 +127,6 @@ export class UsuariosComponent implements OnInit {
       this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
       
       alert("Usuario Eliminado Correctamente!"); 
-      //window.location.reload(); 
     } 
     else 
     {
@@ -235,9 +238,6 @@ export class UsuariosComponent implements OnInit {
 
   Confirmar()
   { 
-    var bo:boolean = true;
-        if(bo)//SI NO EXISTE EMAIL
-        {
             this.usuario.nombre = (<HTMLInputElement>document.getElementById('nombre')).value;
             this.usuario.apellido = (<HTMLInputElement>document.getElementById('apellido')).value;
             this.usuario.dni = (<HTMLInputElement>document.getElementById('dni')).value;
@@ -254,16 +254,6 @@ export class UsuariosComponent implements OnInit {
             this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
             alert("Usuario agregado correctamente!");
             this.formulario=false;
-            //window.location.reload(); 
-            //REGISTRAR EN BS
-            
-        }
-        else
-        {
-            this.alertStylesEmail = {'border-color': 'red'};
-            this.condicion4 = true;
-            this.emailRepetido = true;
-        }
   }
 
 

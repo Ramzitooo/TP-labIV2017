@@ -11,7 +11,7 @@
           (chartClick)="chartClicked($event)"></canvas>
 </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6" style="background:cornsilk;">
       <h1> GRAFICO 2 PIE</h1>
       <div style="display: block">
   <canvas baseChart
@@ -20,6 +20,7 @@
           [chartType]="pieChartType"
           (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)"></canvas>
+          <button class="btn btn-danger btn-sm" (click)="Descargar()" >Descargar Archivo!</button>
 </div>
     </div>
   </div>

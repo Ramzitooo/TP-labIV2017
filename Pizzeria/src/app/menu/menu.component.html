@@ -8,9 +8,6 @@
               <li><a routerLink="/inicio" routerLinkActive="active">Inicio</a></li>
               <li><a routerLink="/productos" routerLinkActive="active">Productos</a></li>
               <li><a routerLink="/locales" routerLinkActive="active">Locales</a></li>
-              <li><a routerLink="/ofertas" routerLinkActive="active">Ofertas</a></li>
-              <!--li><a routerLink="/usuarios" routerLinkActive="active">Usuarios</a></li>
-              <li><a routerLink="/informacion" routerLinkActive="active">Informacion</a></li-->
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a [routerLink]="[]" (click)="Salir()" routerLinkActive="active">Logout</a></li>
@@ -30,9 +27,8 @@
               <li><a routerLink="/inicio" routerLinkActive="active">Inicio</a></li>
               <li><a routerLink="/productos" routerLinkActive="active">Productos</a></li>
               <li><a routerLink="/locales" routerLinkActive="active">Locales</a></li>
-              <li><a routerLink="/ofertas" routerLinkActive="active">Ofertas</a></li>
-              <li><a routerLink="/usuarios" routerLinkActive="active">Usuarios</a></li>
-              <li><a routerLink="/informacion" routerLinkActive="active">Informacion</a></li>
+              <li *ngIf="ObtenerUsuario().tipo=='Administrador' || ObtenerUsuario().tipo=='Encargado' || ObtenerUsuario().tipo=='Empleado'"><a routerLink="/usuarios" routerLinkActive="active">Usuarios</a></li>
+              <li *ngIf="ObtenerUsuario().tipo=='Administrador'"><a routerLink="/informacion" routerLinkActive="active">Informacion</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a [routerLink]="[]" (click)="Salir()" routerLinkActive="active">Log Out</a></li>

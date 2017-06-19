@@ -30,13 +30,19 @@ export class ProductosComponent implements OnInit {
   errorFoto = false;
   Mensaje = "";
   formulario:boolean=false;
+  listadoPedidos:boolean=false;
   
   hoy:Date = new Date(); 
   usuario : Usuario = new Usuario();
   pedidos : FirebaseListObservable<any[]>;
+  mispedidos:any;
   constructor(public ws:WsService,private firebase: AngularFireDatabase) 
   { 
     this.pedidos=firebase.list("/Pedidos");
+
+    this.pedidos.subscribe(data => {console.log(data);this.mispedidos=data;});//ver
+    this.usuario= JSON.parse(localStorage.getItem("usuario"));
+
     this.ws.TraerProductos().then(data => {this.productos=data;console.log(data);});
     this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;}
     this.uploader.onSuccessItem=(response,status)=>{this.errorFoto = false;
@@ -102,13 +108,17 @@ export class ProductosComponent implements OnInit {
   {
     this.formulario=true;
   }
+  VerPedidos()
+  {
+    this.listadoPedidos=true;
+  }
   Pedir(producto)
   {
     console.log(producto);
     this.usuario= JSON.parse(localStorage.getItem("usuario"));
     console.log(this.usuario);
     console.log(this.ObtenerFecha(this.hoy));
-    var obj = {fecha:this.ObtenerFecha(this.hoy),local:"Burzaco",usuario:this.usuario.nombre,producto:producto.descripcion,estado:"Inpago",precio:producto.precio,idUsuario:this.usuario.id};
+    var obj = {fecha:this.ObtenerFecha(this.hoy),local:"Burzaco",usuario:this.usuario.nombre,producto:producto.descripcion,estado:"Pendiente",precio:producto.precio,idUsuario:this.usuario.id};
     console.log(obj);
     this.pedidos.push(obj);
     console.log("Se cargo un pedido a firebase!");
@@ -155,6 +165,15 @@ export class ProductosComponent implements OnInit {
     {
       console.log("No se elimino al usuario");
     }
+
+  }
+  Pagar(pedido)
+  {
+    console.log(pedido);
+    pedido.estado="Pagado";
+    console.log(pedido);
+    this.pedidos.update(pedido.$key,pedido);
+    alert("Gracias por la compra!");
 
   }
   AgregarProducto()

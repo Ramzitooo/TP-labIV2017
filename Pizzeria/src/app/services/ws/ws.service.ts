@@ -144,7 +144,20 @@ export class WsService {
     .catch( this.handleError );
   }
   //--------------------------------------------------------------------
-
+  TraerLocales()
+  {
+    return this.http.get("http://www.osmar.hol.es/index.php/locales")
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
+  AgregarLocal(obj)
+  {
+    return this.http.get("http://www.osmar.hol.es/index.php/agregar/local/"+JSON.stringify(obj))
+    .toPromise()
+    .then( this.extractData )
+    .catch( this.handleError );
+  }
 
   private extractData(res: Response) {
     let body = res.json();    

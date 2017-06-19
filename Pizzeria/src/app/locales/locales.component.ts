@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { WsService } from '../services/ws/ws.service';
+import { Usuario } from '../clases/clases.component';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 declare var google;
 
 @Component({
@@ -9,9 +11,26 @@ declare var google;
 })
 export class LocalesComponent implements OnInit {
 
-  constructor(private ws:WsService) 
+  locales:any;
+  reservas : FirebaseListObservable<any[]>;
+  lasReservas :any;
+  usuario: Usuario= new Usuario();
+  listadoReservas:boolean = false;
+  constructor(private ws:WsService,private firebase: AngularFireDatabase) 
   { 
-    this.ws.getlatlng("Burzaco").then(data => {console.log(data.results["0"].geometry.location);})
+    this.ws.getlatlng("Burzaco").then(data => {console.log(data.results["0"].geometry.location);});
+    this.usuario= JSON.parse(localStorage.getItem("usuario"));
+    this.reservas=firebase.list("/Reservas");
+    this.reservas.subscribe(data => {console.log(data);this.lasReservas=data;});//ver
+
+    this.ws.TraerLocales().then(data => 
+    {
+      console.log(data);
+      
+      this.locales=data;
+
+    });
+    
   }
 
   directionsService;
@@ -51,8 +70,17 @@ obj={lat:"",lng:""};
 
     this.MarcarUsuario();
 
+
     //this.m1.setMap(this.map);
     
+  }
+  VerFormulario()
+  {
+    alert("Muy Pronto!");
+  }
+  VerReservas()
+  {
+    this.listadoReservas=true;
   }
   LeerDireccion()
   {
@@ -76,6 +104,15 @@ obj={lat:"",lng:""};
       console.log(error);
     });
     
+  }
+  VerPuntoMapa(local)
+  {
+    console.log(local);
+    var lng = local.longitud;
+    var lat= local.latitud;
+    var latlng = new google.maps.LatLng(lat,lng);
+    var mapatext = new google.maps.Marker({position: latlng, animation: google.maps.Animation.DROP, title: local.direccion});
+    mapatext.setMap(this.map);
   }
   Chequear()
   {
@@ -144,5 +181,17 @@ obj={lat:"",lng:""};
       }
     });
   }
-
+  Reservar(local)
+  {
+    var hoy : Date = new Date();
+    var usu = this.usuario.nombre +" "+this.usuario.apellido;
+    var lo=local.direccion;
+    var obj={fecha:this.ObtenerFecha(hoy),local:lo,usuario:usu};
+    this.reservas.push(obj);
+    console.log("Se cargo un pedido a firebase!");
+  }
+  ObtenerFecha(date : Date)
+  {
+    return date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
+  }
 }
