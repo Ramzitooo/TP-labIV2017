@@ -56,12 +56,17 @@
 		</div>
 	</div>
 
-	<div class="row"  *ngIf="usuario.tipo!='' ">
+	<!--div class="row"  *ngIf="usuario.tipo!='' ">
 		<div class="col-md-6" *ngIf=" usuario.tipo!='Cliente' "><button type="button" class="btn btn-primary " (click)="VerFormulario()" >Agregar Producto Nuevo!</button></div>
 		<div class="col-md-6"><button type="button" class="btn btn-success " (click)="VerPedidos()" >Ver Mis Pedidos!</button></div>
+			
 
-	</div>
-
+	</div--><br>
+	<div class="row" *ngIf=" usuario.tipo!='' ">
+  <div class="col-sm-4" *ngIf=" usuario.tipo!='Cliente' "><button type="button" class="btn btn-primary  btn-block " (click)="VerFormulario()" >Agregar Producto Nuevo!</button></div>
+  <div class="col-sm-4" *ngIf=" usuario.tipo!='Cliente' "><button type="button" class="btn btn-danger btn-block" (click)="VerTodosPedidos()" >Ver Pedidos!</button></div>
+  <div class="col-sm-4" ><button type="button" class="btn btn-success btn-block" (click)="VerPedidos()" >Ver Mis Pedidos!</button></div>
+</div>
 	<br>
 	<div class="row" *ngIf="listadoPedidos">
 		<h1 style="background:skyblue">Pedidos del usuario : {{usuario.apellido}} {{usuario.nombre}}</h1>
@@ -82,7 +87,7 @@
 
     <td>{{item.fecha}}</td>
     <td>{{item.producto}}</td>
-    <td>{{item.precio}}</td>
+    <td>$ {{item.precio}}</td>
     <td>{{item.local}}</td>
 	<div *ngIf="item.estado=='Pendiente'"><td class="label label-warning" >{{item.estado}}</td></div>
 	<div *ngIf="item.estado=='Pagado'"><td class="label label-success">{{item.estado}}</td></div>
@@ -95,6 +100,45 @@
         </div>
 		</div>
 		</div>
+<!---->
+
+
+	<br>
+	<div class="row" *ngIf="todosPedidos">
+		<h1 style="background:skyblue">Listado de todos los pedidos realizados, Empleado : {{usuario.apellido}} {{usuario.nombre}}</h1>
+        <div class="col-md-12" style="background:white">
+        	<div class="table-responsive">
+              <table id="mytable" class="table table-bordred table-hover " >
+                <thead >
+                    <th>Fecha</th>
+					<th>Usuario</th>
+                	<th>Producto</th>
+                    <th>Precio</th>
+                    <th>Local</th>
+                    <th>Estado</th>
+                    <th>Accion</th> 
+                </thead>
+    <tbody *ngFor="let item of mispedidos" ><!--RECORRO EL ARRAY DE JSON DE PEIDOS DE FIREBASE!-->
+
+    <tr><!--VALIDO QUE SOLO MUESTRE LOS PEDIDOS DEL USUARIO LOGEADO!-->
+
+    <td>{{item.fecha}}</td>
+	<td>{{item.usuario}}</td>
+    <td>{{item.producto}}</td>
+    <td>$ {{item.precio}}</td>
+    <td>{{item.local}}</td>
+	<div *ngIf="item.estado=='Pendiente'"><td class="label label-warning" >{{item.estado}}</td></div>
+	<div *ngIf="item.estado=='Pagado'"><td class="label label-success">{{item.estado}}</td></div>
+    <td><div *ngIf="item.estado=='Pagado'"><button type="button"  (click)="Enviar(item)" class="btn btn-primary btn-sm"> Enviar</button></div></td>
+    </tr>
+
+    </tbody>
+        
+</table>
+        </div>
+		</div>
+		</div>
+
 <!-- FORMULARIO PRODUCTO-->
 <br><br>
 	<div class="row" *ngIf="formulario" style="background:cornflowerblue;">

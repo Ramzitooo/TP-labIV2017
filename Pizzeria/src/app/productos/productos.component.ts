@@ -31,6 +31,7 @@ export class ProductosComponent implements OnInit {
   Mensaje = "";
   formulario:boolean=false;
   listadoPedidos:boolean=false;
+  todosPedidos:boolean=false;
   
   hoy:Date = new Date(); 
   usuario : Usuario = new Usuario();
@@ -98,7 +99,16 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-
+  Enviar(item)
+  {
+    console.log(item);
+    this.pedidos.remove(item.$key);
+    alert("Pedido enviado exitosamente!");
+  }
+  VerTodosPedidos()
+  {
+    this.todosPedidos=true;
+  }
   Keyup(num)
   {
       this.Verificar(num);
@@ -121,6 +131,7 @@ export class ProductosComponent implements OnInit {
     var obj = {fecha:this.ObtenerFecha(this.hoy),local:"Burzaco",usuario:this.usuario.nombre,producto:producto.descripcion,estado:"Pendiente",precio:producto.precio,idUsuario:this.usuario.id};
     console.log(obj);
     this.pedidos.push(obj);
+    alert("Se cargo a tu lista de pedidos!");
     console.log("Se cargo un pedido a firebase!");
     //console.log(this.pedidos);
     //this.pedidos.subscribe(data => {console.log(data);});
@@ -159,11 +170,11 @@ export class ProductosComponent implements OnInit {
       this.ws.EliminarFotoProducto(producto.img);//ELIMINO LA FOTO DEL USUARIO DE MI SERVIDOR.
       this.productos=null;
       this.ws.TraerProductos().then(data => {this.productos=data;});//RECARGO LA PAGINA.
-      alert("Usuario Eliminado Correctamente!");  
+      alert("Producto Eliminado Correctamente!");  
     } 
     else 
     {
-      console.log("No se elimino al usuario");
+      console.log("No se elimino al Producto!");
     }
 
   }

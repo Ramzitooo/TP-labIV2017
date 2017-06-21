@@ -31,7 +31,28 @@ export class LoginComponent implements OnInit
     
   }
 
-
+  Cargar(num)
+  {
+      switch(num)
+    {
+      case '1':
+        this.usuario.email = 'romina@gmail.com';
+        this.usuario.password = '123';
+        break;
+      case '2':
+        this.usuario.email = 'gabriel@gmail.com';
+        this.usuario.password = '123';
+        break;
+    case '3':
+        this.usuario.email = 'nicolas@gmail.com';
+        this.usuario.password = '123'
+        break;
+      case '4':
+        this.usuario.email = 'osmar@gmail.com';
+        this.usuario.password = '123'
+        break;
+    }
+  }
   Verificar(num)//VERIFICO QUE LOS CAMPOS DE LOS TEXT NO ESTEN VACIO EN CASO CONTRARIO LOS REMARCO Y DESACTIVO EL BOTON LOGIN.
   {
     switch(num)

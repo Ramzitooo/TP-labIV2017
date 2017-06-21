@@ -1,3 +1,9 @@
+<div class="container">
+<button type="button" class="btn btn-primary" (click)="Cargar('1')" >Cliente</button>
+<button type="button" class="btn btn-success" (click)="Cargar('2')" >Empleado</button>
+<button type="button" class="btn btn-info" (click)="Cargar('3')" >Encargado</button>
+<button type="button" class="btn btn-warning" (click)="Cargar('4')" >Administrador</button>
+</div>
 <div class="container"><br><br>
 
   <div class="card card-container">
@@ -12,7 +18,7 @@
       
       <input [(ngModel)]="usuario.password" name="password" type="password" [ngStyle]="alertStylesPass" (focusout)="Verificar(2)" (keyup)="Keyup(2)" class="form-control" id="password" placeholder="Contraseña..."><br>
       
-      <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" (click)="Login()" [disabled]="condicion1 || condicion2" ><span class="glyphicon glyphicon-user"></span> Login</button>
+      <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" (click)="Login()"  ><span class="glyphicon glyphicon-user"></span> Login</button>
       
       <button class="btn btn-lg btn-success btn-block btn-signin2" type="button" (click)="Registro()" ><span class="glyphicon glyphicon-edit"></span> Registrarme!</button>
     
