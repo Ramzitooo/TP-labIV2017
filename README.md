@@ -20,6 +20,10 @@
 .
 
  <h1> de no presentar el TP para las fechas anteriores, debe  presentar en fecha de final</h1>
+ 
+   <h1>PAGINA WEB: </h1>
+  <h1>www.floresosmar.hol.es</h1>
+ 
  <h1>Pizzeria Argenta SRL</h1>
 <p>El usuario que entra a la pagina. Puede navegar sin necesidad de registrarse o logearse.
 La primer pagina que se muestra es la de inicio en la cual incluye un carusel de imagenes con una breve descrcipcion de dicha empresa .
