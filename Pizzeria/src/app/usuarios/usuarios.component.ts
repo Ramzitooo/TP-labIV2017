@@ -41,6 +41,7 @@ export class UsuariosComponent implements OnInit {
   formulario:boolean=false;
   fotomodificar="";
   btnModificar:boolean = false;
+  loading2 : boolean = false;
 
   usuarioLogeado:Usuario = new Usuario();
 
@@ -52,11 +53,12 @@ export class UsuariosComponent implements OnInit {
     .catch(e => {console.log(e);});
 
     this.usuario.sexo = "Masculino";
-      this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;}
+      this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;this.loading2=true;}
       this.uploader.onSuccessItem=(response,status)=>{this.errorFoto = false;
         let json = JSON.parse(status);
         if(json.Exito)
         {
+              this.loading2=false;
               this.imagen = json.foto;
               //this.foto = "http://localhost/api/tmp/"+this.imagen;
               this.foto = "http://www.osmar.hol.es/tmp/"+this.imagen;

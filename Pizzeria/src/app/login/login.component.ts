@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit
 {
 
   usuario = new Usuario();
-
+  loading : boolean = false;
   alertStylesEmail = {'border-color': ''};
   alertStylesPass = {'border-color': ''};
   condicion1 = true;
@@ -87,10 +87,11 @@ export class LoginComponent implements OnInit
   {
       this.Verificar(num);
   }
-
+  Fuc1(){setTimeout(() => {console.log("hola");},2000);}//VER FUNCION DEL TIEMPO DANIEL!
   Login()
   {
     console.log(this.usuario);
+    this.loading = true;
     this.aut.logOut();
     this.ws.CrearToken(this.usuario)//LLAMO AL METODO DE MI SERVICIO CREARTOKEN
     .then(data => 
@@ -99,12 +100,14 @@ export class LoginComponent implements OnInit
         if (data.exito==true) 
         {
             localStorage.setItem('token', data.token);
+            this.loading=false;
             this.ws.GetJwt().then(data => {console.log(data.rta.usuario);localStorage.setItem("usuario",JSON.stringify(data.rta.usuario));});
             console.log(this.aut.getToken());
             this.parentRouter.navigateByUrl("/inicio");
         }
         else
         {
+            this.loading=false;
             alert("Datos Incorrectos... Reingrese!");
             this.usuario=new Usuario();
         }
@@ -113,6 +116,8 @@ export class LoginComponent implements OnInit
     .catch(error => 
     {
       console.log(error);
+      this.loading=false;
+      alert("Error del servidor!");
     });
   }
 

@@ -28,6 +28,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
 
+
 const appRoutes: Routes = [
   { path: 'inicio',component: InicioComponent},
   { path: 'informacion',component: InformacionComponent},

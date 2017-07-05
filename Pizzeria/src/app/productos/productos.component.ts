@@ -19,7 +19,7 @@ export class ProductosComponent implements OnInit {
   public uploader:FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver:boolean = false;
   public hasAnotherDropZoneOver:boolean = false;
-
+  loading2 : boolean = false;
   alertStylesDescripcion = {'border-color': ''};
   alertStylesPrecio = {'border-color': ''};
   condicion1 = true;
@@ -45,11 +45,13 @@ export class ProductosComponent implements OnInit {
     this.usuario= JSON.parse(localStorage.getItem("usuario"));
 
     this.ws.TraerProductos().then(data => {this.productos=data;console.log(data);});
-    this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;}
+    this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;this.loading2=true;}
     this.uploader.onSuccessItem=(response,status)=>{this.errorFoto = false;
     let json = JSON.parse(status);
+    this.loading2=true;
         if(json.Exito)
         {
+              this.loading2=false;
               this.imagen = json.foto;
               //this.foto = "http://localhost/api/tmp/"+this.imagen;
               this.foto = "http://www.osmar.hol.es/tmp/"+this.imagen;

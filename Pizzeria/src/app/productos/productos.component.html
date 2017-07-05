@@ -167,9 +167,23 @@
 				  </div><br>
   		</div>
 
-		<div class="col-xs-6" ><div class="form-group">
+		<div class="col-xs-6" >
 			
-			<img  [src]="foto"  width="200px"  height="200px"></div>
+			<div class="form-group">
+			
+			<div *ngIf="!loading2" class="center">
+
+				<img  [src]="foto"  width="200px"  height="200px">
+      
+      		</div> 
+      
+      		<div *ngIf="loading2" class="center">
+        
+         		<div class="loader2"></div>
+      
+      		</div>
+			
+			</div>
 
 		</div>
 

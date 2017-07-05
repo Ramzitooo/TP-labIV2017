@@ -150,7 +150,17 @@
                <div class="col-md-10">
                   <input type="file" ng2FileSelect [uploader]="uploader" id="file" (change)="Imagen()" />
                   <div class="alert alert-danger" *ngIf="errorFoto"><strong>Error!</strong> {{Mensaje}}</div><br>
-                  <img [src]="foto"  width="200px" height="200px">               
+                  <div *ngIf="!loading2" class="center">
+
+                    <img  [src]="foto"  width="200px"  height="200px">
+            
+                  </div> 
+            
+                  <div *ngIf="loading2" class="center">
+              
+                    <div class="loader2"></div>
+            
+                </div>          
                </div>
             </div>
             <div class="row" >
