@@ -33,22 +33,25 @@ usuario = new Usuario();
   numero = 4;
   errorFoto = false;
   Mensaje = "";
-
+  loading2 : boolean = false;
   constructor(private ws: WsService,private parentRouter : Router) 
   {
       this.usuario.sexo = "Masculino";
-      this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;}
+      this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;this.loading2=true;}
       this.uploader.onSuccessItem=(response,status)=>{this.errorFoto = false;
         let json = JSON.parse(status);
         if(json.Exito)
         {
+            this.loading2=false;
               this.imagen = json.foto;
               //this.foto = "http://localhost/api/tmp/"+this.imagen;
               this.foto = "http://www.osmar.hol.es/tmp/"+this.imagen;
         }
         else
         {
+            this.loading2=false;
               this.errorFoto = true;
+              alert(this.Mensaje);
               this.Mensaje = json.Mensaje;
               this.imagen = "defecto.png";
               this.foto = "../assets/img/usuarios/defecto.png";
@@ -154,6 +157,11 @@ usuario = new Usuario();
     var bo:boolean = true;
         if(bo)//SI NO EXISTE EMAIL
         {
+            if(this.imagen=="defecto.png")
+            {
+            alert("Debe seleccionar una imagen!");
+            return;
+            }
             this.usuario.nombre = (<HTMLInputElement>document.getElementById('nombre')).value;
             this.usuario.apellido = (<HTMLInputElement>document.getElementById('apellido')).value;
             this.usuario.dni = (<HTMLInputElement>document.getElementById('dni')).value;

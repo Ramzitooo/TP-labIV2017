@@ -19,19 +19,23 @@
       
       <input [(ngModel)]="usuario.password" name="password" type="password" [ngStyle]="alertStylesPass" (focusout)="Verificar(2)" (keyup)="Keyup(2)" class="form-control" id="password" placeholder="Contraseña..."><br>
       
-      <div *ngIf="!loading">
+      
 
       <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" (click)="Login()"  ><span class="glyphicon glyphicon-user"></span> Login</button>
       
       <button class="btn btn-lg btn-success btn-block btn-signin2" type="button" (click)="Registro()" ><span class="glyphicon glyphicon-edit"></span> Registrarme!</button>
       
-      </div> 
       
-      <div *ngIf="loading" class="center">
+      
+    <div *ngIf="loading" class="LockOn"><!-- SPINNER -->
+  
+      <div  class="parent">
         
-         <div class="loader"></div>
-      
+        <div class="loader"></div><br>
+
       </div>
+
+    </div><!-- FIN SPINNER -->
     
     </form><!-- /form -->
   

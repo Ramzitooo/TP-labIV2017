@@ -19,7 +19,10 @@ export class ProductosComponent implements OnInit {
   public uploader:FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver:boolean = false;
   public hasAnotherDropZoneOver:boolean = false;
+
   loading2 : boolean = false;
+  loadingP :boolean = true;
+  btnReiniciar :boolean = false;
   alertStylesDescripcion = {'border-color': ''};
   alertStylesPrecio = {'border-color': ''};
   condicion1 = true;
@@ -44,7 +47,20 @@ export class ProductosComponent implements OnInit {
     this.pedidos.subscribe(data => {console.log(data);this.mispedidos=data;});//ver
     this.usuario= JSON.parse(localStorage.getItem("usuario"));
 
-    this.ws.TraerProductos().then(data => {this.productos=data;console.log(data);});
+    this.ws.TraerProductos()
+    .then(data => 
+    {
+      this.productos=data;
+      console.log(data);
+      this.loadingP=false;
+    })
+    .catch(error => 
+    {
+      console.log(error);
+      this.btnReiniciar=true;
+    });
+
+
     this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;this.loading2=true;}
     this.uploader.onSuccessItem=(response,status)=>{this.errorFoto = false;
     let json = JSON.parse(status);
@@ -68,7 +84,10 @@ export class ProductosComponent implements OnInit {
 
   ngOnInit() 
   {
-
+  }
+  Recargar()
+  {
+    window.location.reload();
   }
   Verificar(num)
   {
@@ -124,31 +143,49 @@ export class ProductosComponent implements OnInit {
   {
     this.listadoPedidos=true;
   }
+  Pedir2(obj)
+  {
+
+
+    console.log(obj);
+    obj.cantidad = obj.cantidad + 1;
+    this.pedidos.update(obj.$key,obj);
+               
+   // this.pedidos.push(obj);
+    //alert("Se cargo a tu lista de pedidos!");
+    //console.log("Se cargo un pedido a firebase!");
+    //console.log(this.pedidos);
+    //this.pedidos.subscribe(data => {console.log(data);});
+  
+  }
   Pedir(producto)
   {
     console.log(producto);
+    
     this.usuario= JSON.parse(localStorage.getItem("usuario"));
     console.log(this.usuario);
     console.log(this.ObtenerFecha(this.hoy));
-    var obj = {fecha:this.ObtenerFecha(this.hoy),local:"Burzaco",usuario:this.usuario.nombre,producto:producto.descripcion,estado:"Pendiente",precio:producto.precio,idUsuario:this.usuario.id};
+    var dire= prompt("Ingrese direccion a enviar...","direccion");
+    var obj = {
+      fecha:this.ObtenerFecha(this.hoy),
+      local:"Burzaco",
+      usuario:this.usuario.nombre,
+      cantidad : 1,
+      producto:producto.descripcion,
+      estado:"Pendiente",
+      precio:producto.precio,
+      direccion:dire,
+      idUsuario:this.usuario.id,
+      idProducto:producto.id};
+
     console.log(obj);
+
+                
     this.pedidos.push(obj);
     alert("Se cargo a tu lista de pedidos!");
     console.log("Se cargo un pedido a firebase!");
-    //console.log(this.pedidos);
-    //this.pedidos.subscribe(data => {console.log(data);});
-    this.pedidos.forEach( pedidos => 
-    {
-                  for(let pedido of pedidos)
-                  {
-                    if(pedido.idUsuario==this.usuario.id)
-                    {
-                        console.log(pedido);
-                       
-                    }
-                  }
-                });
   }
+
   ObtenerFecha(date : Date)
   {
     return date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
@@ -158,7 +195,7 @@ export class ProductosComponent implements OnInit {
     this.uploader.uploadAll();
     if((<HTMLInputElement>document.getElementById('file')).value == "")
     {
-      this.foto = "assets/img/usuarios/defecto.png";
+      this.foto = "assets/img/productos/defecto.png";
       this.imagen="defecto.png";
     }
   }
@@ -173,6 +210,7 @@ export class ProductosComponent implements OnInit {
       this.productos=null;
       this.ws.TraerProductos().then(data => {this.productos=data;});//RECARGO LA PAGINA.
       alert("Producto Eliminado Correctamente!");  
+      window.location.reload();
     } 
     else 
     {
@@ -191,6 +229,11 @@ export class ProductosComponent implements OnInit {
   }
   AgregarProducto()
   {
+    if(this.imagen=="defecto.png")
+    {
+      alert("Debe seleccionar una imagen!");
+      return;
+    }
     this.producto.img=this.imagen;
     console.log(this.producto);
     this.ws.AgregarProducto(this.producto);//SUBO UN CLIENTE!
@@ -199,6 +242,7 @@ export class ProductosComponent implements OnInit {
     this.formulario=false;
     this.productos=null;
     this.ActualizarLista();
+    window.location.reload();
     
   }
   ActualizarLista()

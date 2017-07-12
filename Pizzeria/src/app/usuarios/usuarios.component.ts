@@ -43,14 +43,26 @@ export class UsuariosComponent implements OnInit {
   btnModificar:boolean = false;
   loading2 : boolean = false;
 
+  loadingP :boolean = true;
+  btnReiniciar :boolean = false;
+
   usuarioLogeado:Usuario = new Usuario();
 
   constructor(private ws:WsService,private parentRouter : Router) 
   { 
     this.usuarioLogeado = JSON.parse(localStorage.getItem("usuario"));
     this.ws.TraerUsuarios()
-    .then(data => {console.log(data);this.usuarios=data})
-    .catch(e => {console.log(e);});
+    .then(data => 
+    {
+      console.log(data);
+      this.usuarios=data;
+      this.loadingP=false;
+    })
+    .catch(e => 
+    {
+      console.log(e);
+      this.btnReiniciar=true;
+    });
 
     this.usuario.sexo = "Masculino";
       this.uploader.onBeforeUploadItem=(item)=>{console.info("item",item);item.withCredentials=false;this.loading2=true;}
@@ -67,6 +79,7 @@ export class UsuariosComponent implements OnInit {
         {
               this.errorFoto = true;
               this.Mensaje = json.Mensaje;
+              alert(this.Mensaje);
               this.imagen = "defecto.png";
               this.foto = "../assets/img/usuarios/defecto.png";
         }}
@@ -76,6 +89,10 @@ export class UsuariosComponent implements OnInit {
   ngOnInit() 
   {
 
+  }
+  Recargar()
+  {
+    window.location.reload();
   }
   Editar()
   {
@@ -240,6 +257,11 @@ export class UsuariosComponent implements OnInit {
 
   Confirmar()
   { 
+    if(this.imagen=="defecto.png")
+    {
+      alert("Debe seleccionar una imagen!");
+      return;
+    }
             this.usuario.nombre = (<HTMLInputElement>document.getElementById('nombre')).value;
             this.usuario.apellido = (<HTMLInputElement>document.getElementById('apellido')).value;
             this.usuario.dni = (<HTMLInputElement>document.getElementById('dni')).value;

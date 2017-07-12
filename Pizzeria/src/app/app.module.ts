@@ -27,6 +27,7 @@ import { JwtModule } from './jwt/jwt.module';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
+import  {HashLocationStrategy,LocationStrategy} from "@angular/common"; 
 
 
 const appRoutes: Routes = [
@@ -80,7 +81,7 @@ export const environment = {
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [WsService,AutService,VerificarJWTService],//AGREGO SERVICIOS.
+  providers: [WsService,AutService,VerificarJWTService,{provide:LocationStrategy,useClass:HashLocationStrategy}],//AGREGO SERVICIOS.
   bootstrap: [AppComponent]
 })
 export class AppModule { }

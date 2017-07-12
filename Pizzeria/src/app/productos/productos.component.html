@@ -1,5 +1,21 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container" >
+
+
+	<div *ngIf="loadingP" class="LockOn3"><!-- SPINNER -->
+  
+      <div  class="parent3">
+        
+        <div class="loader2"></div><br>
+		<div *ngIf="btnReiniciar"><br>
+			<h1>Ocurrio un error en la carga...</h1><br>
+			<button type="button" class="btn btn-primary btn-lg" (click)="Recargar()">Reiniciar</button>
+		</div>
+
+      </div>
+
+    </div><!-- FIN SPINNER -->
+
 	<div *ngFor="let item of productos">
 		<div class="col-xs-12 col-md-6 bootstrap snippets">
 		<!-- product -->
@@ -78,17 +94,24 @@
                 	<th>Producto</th>
                     <th>Precio</th>
                     <th>Local</th>
+					<th>Destino</th>
+					<th>Cantidad</th>
+					<th>Total</th>
                     <th>Estado</th>
                     <th>Accion</th> 
                 </thead>
-    <tbody *ngFor="let item of mispedidos" ><!--RECORRO EL ARRAY DE JSON DE PEIDOS DE FIREBASE!-->
+    <tbody *ngFor="let item of mispedidos; let i = index" ><!--RECORRO EL ARRAY DE JSON DE PEIDOS DE FIREBASE!-->
 
-    <tr *ngIf="usuario.id==item.idUsuario"><!--VALIDO QUE SOLO MUESTRE LOS PEDIDOS DEL USUARIO LOGEADO!-->
+    <tr *ngIf="usuario.id==item.idUsuario "><!--VALIDO QUE SOLO MUESTRE LOS PEDIDOS DEL USUARIO LOGEADO!-->
 
     <td>{{item.fecha}}</td>
     <td>{{item.producto}}</td>
     <td>$ {{item.precio}}</td>
     <td>{{item.local}}</td>
+	<td>{{item.direccion}}</td>
+	<div *ngIf="item.estado=='Pendiente'"><td>{{item.cantidad}} <button type="button"  (click)="Pedir2(item)" class="btn btn-primary btn-xs">+</button></td></div>
+	<div *ngIf="item.estado=='Pagado'"><td>{{item.cantidad}}</td></div>
+	<td>$ {{item.cantidad * item.precio}}</td>
 	<div *ngIf="item.estado=='Pendiente'"><td class="label label-warning" >{{item.estado}}</td></div>
 	<div *ngIf="item.estado=='Pagado'"><td class="label label-success">{{item.estado}}</td></div>
     <td><div *ngIf="item.estado=='Pendiente'"><button type="button"  (click)="Pagar(item)" class="btn btn-primary btn-sm"> Pagar</button></div></td>
@@ -104,7 +127,7 @@
 
 
 	<br>
-	<div class="row" *ngIf="todosPedidos">
+	<div class="row" *ngIf="todosPedidos" onfocus="true" id="todosPedidos">
 		<h1 style="background:skyblue">Listado de todos los pedidos realizados, Empleado : {{usuario.apellido}} {{usuario.nombre}}</h1>
         <div class="col-md-12" style="background:white">
         	<div class="table-responsive">
@@ -115,6 +138,9 @@
                 	<th>Producto</th>
                     <th>Precio</th>
                     <th>Local</th>
+					<th>Destino</th>
+					<th>Cantidad</th>
+					<th>Total</th>
                     <th>Estado</th>
                     <th>Accion</th> 
                 </thead>
@@ -127,6 +153,8 @@
     <td>{{item.producto}}</td>
     <td>$ {{item.precio}}</td>
     <td>{{item.local}}</td>
+	<td>{{item.cantidad}}</td>
+	<td>$ {{item.cantidad * item.precio}}</td>
 	<div *ngIf="item.estado=='Pendiente'"><td class="label label-warning" >{{item.estado}}</td></div>
 	<div *ngIf="item.estado=='Pagado'"><td class="label label-success">{{item.estado}}</td></div>
     <td><div *ngIf="item.estado=='Pagado'"><button type="button"  (click)="Enviar(item)" class="btn btn-primary btn-sm"> Enviar</button></div></td>
