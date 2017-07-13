@@ -105,24 +105,23 @@ export class UsuariosComponent implements OnInit {
             this.usuario.password = (<HTMLInputElement>document.getElementById('password')).value;
             //this.usuario.img =
             this.usuario.tipo=this.tipo;
-            this.usuario.img=this.imagen;
-            if(this.usuario.img == "defecto.png")
+            //this.usuario.img=this.imagen;
+            if(this.imagen == this.fotomodificar)
             {
+              console.log("entro if");
               this.usuario.img=this.fotomodificar;
-              this.ws.ModificarUsuario(this.usuario);
+              this.ws.ModificarUsuario(this.usuario).then(data =>{window.location.reload(); });
+              
             }
             else
             {
+              console.log("entro else");
               this.usuario.img=this.imagen;
               this.ws.ModificarUsuario(this.usuario);
               this.ws.EliminarFoto(this.fotomodificar);
-              this.ws.MoverFoto(this.usuario.img);
+              this.ws.MoverFoto(this.usuario.img).then(data =>{window.location.reload(); });;
+              
             }
-            console.log(this.usuario);
-            this.usuarios=null;
-            this.ws.TraerUsuarios().then(data => {this.usuarios=data;});
-            this.formulario=false;
-            this.btnModificar=false;
             //window.location.reload(); 
   }
   Modificar(item)
@@ -132,6 +131,7 @@ export class UsuariosComponent implements OnInit {
     //this.foto="http://localhost/api/img/usuarios/"+item.img;
     this.foto="http://www.osmar.hol.es/img/usuarios/"+item.img;
     this.fotomodificar=item.img;
+    this.imagen=item.img;
     this.formulario=true;
     this.btnModificar=true;
   }
@@ -141,10 +141,7 @@ export class UsuariosComponent implements OnInit {
     if (respuesta==true) 
     {
       this.ws.EliminarUsuario(id);//ELIMINO EL USUARIO DE LA BASE DE DATOS.  
-      this.ws.EliminarFoto(foto);//ELIMINO LA FOTO DEL USUARIO DE MI SERVIDOR.
-      this.usuarios=null;
-      this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
-      
+      this.ws.EliminarFoto(foto).then(data => {window.location.reload();});//ELIMINO LA FOTO DEL USUARIO DE MI SERVIDOR.
       alert("Usuario Eliminado Correctamente!"); 
     } 
     else 
@@ -274,11 +271,11 @@ export class UsuariosComponent implements OnInit {
             console.log(this.usuario);
             this.ws.AgregarUsuario(this.usuario);//SUBO UN CLIENTE!
             this.ws.MoverFoto(this.usuario.img);//MUEVO LA FOTO!
-            this.usuarios=null;
             this.ws.TraerUsuarios().then(data => {this.usuarios=data;});//RECARGO LA PAGINA.
             alert("Usuario agregado correctamente!");
-            this.formulario=false;
+            window.location.reload();
   }
+
 
 
 }

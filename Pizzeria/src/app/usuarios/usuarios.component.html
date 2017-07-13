@@ -17,16 +17,16 @@
         <div class="col-lg-12">
             <div class="main-box no-header clearfix">
                 <div class="main-box-body clearfix">
-                    <div class="table-responsive" style="background: url(assets/img/fondos/fondo2.jpg) top center;">
-                        <table class="table user-list">
-                            <thead>
+                    <div class="table-responsive" >
+                        <table class="table user-list" style="background-image: url('assets/img/fondos/italia.jpg');height: 100%; background-position: center;background-repeat: no-repeat;background-size: cover;">
+                            <thead style="background:black;">
                                 <tr>
-                                <th><span>Usuarios</span></th>
-                                <th class="text-center"><span>D.N.I</span></th>
-                                <th class="text-center"><span>Categoria</span></th>
-                                <th class="text-center"><span>E-mail</span></th>
-                                <th class="text-center">Sexo</th>
-                                <th class="text-center">Accion</th>
+                                <th><span style="color:white;">Usuarios</span></th>
+                                <th class="text-center"><span style="color:white;">D.N.I</span></th>
+                                <th class="text-center"><span style="color:white;">Categoria</span></th>
+                                <th class="text-center"><span style="color:white;">E-mail</span></th>
+                                <th class="text-center" style="color:white;">Sexo</th>
+                                <th class="text-center" style="color:white;">Accion</th>
                                 </tr>
                             </thead>
                             <tbody *ngFor="let item of usuarios">
@@ -34,8 +34,8 @@
                                     <td>
                                         <!--img src="http://localhost/api/img/usuarios/{{item.img}}" width="100" height="100"-->
                                         <img src="http://www.osmar.hol.es/img/usuarios/{{item.img}}" width="100" height="100">
-                                        <span class="text-center" >{{item.nombre}}</span>
-                                        <span class="text-center">{{item.apellido}}</span>
+                                        <span class="text-center" style="color:white;">{{item.nombre}}</span>
+                                        <span class="text-center" style="color:white;">{{item.apellido}}</span>
                                     </td>
                                     <td class="text-center">{{item.dni}}</td>
                                     <td class="text-center">
@@ -52,8 +52,8 @@
                                      {{item.sexo}}
                                    </td>
                                    <td class="text-center" *ngIf="usuarioLogeado.tipo=='Administrador' || usuarioLogeado.tipo=='Encargado'">
-                                     <button type="button" class="btn btn-success" (click)="Modificar(item)" >Modificar</button><br><br>
-                                     <button type="button" class="btn btn-danger" (click)="Eliminar(item.id,item.img)">Eliminar</button>
+                                     <button type="button" class="btn btn-success" (click)="Modificar(item)" ><span class="glyphicon glyphicon-pencil"></span> Modificar</button><br><br>
+                                     <button type="button" class="btn btn-danger" (click)="Eliminar(item.id,item.img)"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
                                    </td>
                                 </tr>
                                
@@ -179,7 +179,7 @@
             <div class="row" >
               <div class="col-sm-4"><button type="button" class="btn btn-success btn-block " (click)="Confirmar()"  [disabled]="condicion1 || condicion2 || condicion3 || condicion4 || condicion5">Confirmar</button></div>
               <div class="col-sm-4"><button type="reset" class="btn btn-danger btn-block" (click)="Cancelar()">Cancelar</button><br></div>
-              <div class="col-sm-4" *ngIf="btnModificar"><button type="reset" class="btn btn-warning btn-block" (click)="Editar()">Editar</button><br></div>
+              <div class="col-sm-4" *ngIf="btnModificar"><button type="button" class="btn btn-warning btn-block" (click)="Editar()">Editar</button><br></div>
             </div>
          </form>
          

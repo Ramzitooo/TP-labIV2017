@@ -89,7 +89,7 @@ obj={lat:"",lng:""};
     this.ws.getlatlng(this.direccion)
     .then(data => 
     {
-
+      console.log(data);
       var lng = data.results["0"].geometry.location.lng;
       var lng2:string  = data.results["0"].geometry.location.lng;
       var lat= data.results["0"].geometry.location.lat;

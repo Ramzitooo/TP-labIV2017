@@ -182,7 +182,7 @@ export class ProductosComponent implements OnInit {
 
                 
     this.pedidos.push(obj);
-    alert("Se cargo a tu lista de pedidos!");
+    alert("Se cargo a tu lista de pedidos!\n Puede agregar mas en su lista de pedidos!");
     console.log("Se cargo un pedido a firebase!");
   }
 

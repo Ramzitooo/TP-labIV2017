@@ -38,7 +38,7 @@ export class MenuComponent implements OnInit {
     localStorage.setItem('token', null);
     localStorage.setItem('usuario', JSON.stringify(usu));
     this.aut.logOut();
-    window.alert('Chauuu!!!');
+    window.alert('Cerrando Sesion...');
     this.router.navigate(['/login']);
   
   }

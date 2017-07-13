@@ -49,9 +49,9 @@
 						<div class="product-info smart-form">
 							<div class="row">
 								<div class="col-md-6 col-sm-6 col-xs-6">
-									<div class="row" *ngIf="usuario.tipo!='' ">
-										<div class="col-xs-6"><button class="btn btn-success btn-sm" (click)="Pedir(item)" >Pedir!</button></div>
-										<div class="col-xs-6" *ngIf="usuario.tipo == 'Encargar' || usuario.tipo == 'Administrador'"><button class="btn btn-danger btn-sm" (click)="BorrarProducto(item)" >Borrar!</button></div>
+									<div class="row " *ngIf="usuario.tipo!='' ">
+										<div class="col-xs-6 parent3"><button class="btn btn-success btn-sm" (click)="Pedir(item)" ><span class="glyphicon glyphicon-shopping-cart"></span>Pedir!</button></div>
+										<div class="col-xs-6 parent3" *ngIf="usuario.tipo == 'Encargar' || usuario.tipo == 'Administrador'"><button class="btn btn-danger btn-sm" (click)="BorrarProducto(item)" ><span class="glyphicon glyphicon-trash"></span></button></div>
 									</div> 
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-6">
@@ -59,8 +59,6 @@
 										<label for="stars-rating-5"><i class="fa fa-star" style="color:red"></i></label>
 										<label for="stars-rating-4"><i class="fa fa-star" style="color:red" ></i></label>
 										<label for="stars-rating-3"><i class="fa fa-star" style="color:red" ></i></label>
-										<label for="stars-rating-2"><i class="fa fa-star" style="color:red" ></i></label>
-										<label for="stars-rating-1"><i class="fa fa-star"></i></label>
 									</div>
 								</div>
 							</div>
@@ -78,11 +76,11 @@
 			
 
 	</div--><br>
-	<div class="row" *ngIf=" usuario.tipo!='' ">
+	<div class="container"><div class="row" *ngIf=" usuario.tipo!='' ">
   <div class="col-sm-4" *ngIf=" usuario.tipo!='Cliente' "><button type="button" class="btn btn-primary  btn-block " (click)="VerFormulario()" >Agregar Producto Nuevo!</button></div>
   <div class="col-sm-4" *ngIf=" usuario.tipo!='Cliente' "><button type="button" class="btn btn-danger btn-block" (click)="VerTodosPedidos()" >Ver Pedidos!</button></div>
   <div class="col-sm-4" ><button type="button" class="btn btn-success btn-block" (click)="VerPedidos()" >Ver Mis Pedidos!</button></div>
-</div>
+</div></div>
 	<br>
 	<div class="row" *ngIf="listadoPedidos">
 		<h1 style="background:skyblue">Pedidos del usuario : {{usuario.apellido}} {{usuario.nombre}}</h1>
@@ -153,6 +151,7 @@
     <td>{{item.producto}}</td>
     <td>$ {{item.precio}}</td>
     <td>{{item.local}}</td>
+	<td>{{item.direccion}}</td>
 	<td>{{item.cantidad}}</td>
 	<td>$ {{item.cantidad * item.precio}}</td>
 	<div *ngIf="item.estado=='Pendiente'"><td class="label label-warning" >{{item.estado}}</td></div>
